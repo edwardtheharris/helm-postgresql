@@ -54,6 +54,8 @@ podSecurityContext: {}
   # fsGroup: 2000
 postgresql:
   database: postgres
+  password: postgres
+  username: postgres
 readinessProbe:
   exec:
     command:
