@@ -14,17 +14,17 @@
 # :language: yaml
 # :start-at: "version: 2\n"
 # ```
-version: 2
 updates:
-  ###
-  # See documentation for possible values
-  #
-  # - `"pip"`
-  - package-ecosystem: "pip"
     ###
     # Location of package manifests
     #
     # - `"/"`
-    directory: "/"
+  - directory: "postgresql/"
+    ###
+    # See documentation for possible values
+    #
+    # - `"docker"`
+    package-ecosystem: "docker"
     schedule:
       interval: "weekly"
+version: 2
