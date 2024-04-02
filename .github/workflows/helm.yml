@@ -72,6 +72,7 @@ jobs:
     needs: helmsetup
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@main
       - run: helm lint postgresql/
 
   ###
@@ -90,6 +91,7 @@ jobs:
     needs: helmsetup
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@main
       - run: helm plugin install https://github.com/helm-unittest/helm-unittest
       - run: helm unittest -f postgresql/tests/*test.yaml' -o results.xml postgresql/
       - name: Publish Test Report
