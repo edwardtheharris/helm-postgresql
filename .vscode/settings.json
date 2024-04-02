@@ -1,0 +1,10 @@
+{
+    "github-actions.workflows.pinned.workflows": [
+        ".github/workflows/helm.yml"
+    ],
+    "cSpell.words": [
+        "automount",
+        "fullname",
+        "mysecret"
+    ]
+}

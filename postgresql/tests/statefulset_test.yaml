@@ -1,0 +1,9 @@
+suite: test for statefulset
+templates:
+  - statefulset.yaml
+tests:
+  - asserts:
+      - isKind:
+          of: StatefulSet
+    it: should be a StatefulSet
+
