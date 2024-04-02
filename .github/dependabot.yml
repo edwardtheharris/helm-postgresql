@@ -15,6 +15,10 @@
 # :start-at: "version: 2\n"
 # ```
 updates:
+  - directory: "/"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "weekly"
     ###
     # Location of package manifests
     #
