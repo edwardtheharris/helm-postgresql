@@ -68,8 +68,11 @@ jobs:
   # :end-before: "###\n"
   # ```
   helmlint:
+    name: helmlint
     needs: helmsetup
     runs-on: ubuntu-latest
+    steps:
+      - run: helm lint postgresql/
 
   ###
   # ```{rubric} helm lint
@@ -83,3 +86,14 @@ jobs:
   # :end-before: "###\n"
   # ```
   helmtest:
+    name: helmtest
+    needs: helmsetup
+    runs-on: ubuntu-latest
+    steps:
+      - run: helm plugin install https://github.com/helm-unittest/helm-unittest
+      - run: helm unittest -f postgresql/tests/*test.yaml' -o results.xml postgresql/
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v4
+        if: success() || failure() # always run even if the previous step fails
+        with:
+          report_paths: 'results.xml'
