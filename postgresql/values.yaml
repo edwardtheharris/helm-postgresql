@@ -9,7 +9,7 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-fullnameOverride: ""
+fullnameOverride: "postgres"
 image:
   pullPolicy: IfNotPresent
   repository: postgresql
@@ -24,7 +24,7 @@ ingress:
   className: ""
   enabled: false
   hosts:
-    - host: chart-example.local
+    - host: pg.svc.cluster.local
       paths:
         - path: /
           pathType: ImplementationSpecific
@@ -101,8 +101,12 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 tolerations: []
+type: StatefulSet
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
+volumeMounts:
+  - mountPath: "/srv/k8s/k8s01/volumes/postgres"
+    name: data
+    readOnly: false
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
