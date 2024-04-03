@@ -5,6 +5,8 @@
     "cSpell.words": [
         "automount",
         "fullname",
-        "mysecret"
+        "mysecret",
+        "storageclass",
+        "UNMAP"
     ]
 }
