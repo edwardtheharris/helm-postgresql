@@ -1,27 +1,23 @@
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   annotations:
-    name: nautobot-postgres
-    volume.beta.kubernetes.io/storage-provisioner: local
-    volume.kubernetes.io/selected-node: k8s01.socal.rr.com
+    name: postgres
     volume.kubernetes.io/storage-provisioner: local
   finalizers:
     - kubernetes.io/pvc-protection
   labels:
     app.kubernetes.io/component: primary
-    app.kubernetes.io/instance: nautobot
-    app.kubernetes.io/name: postgresql
-  name: nautobot-postgres
-  namespace: nautobot
+    app.kubernetes.io/instance: postgresql
+    app.kubernetes.io/name: postgres
+  name: postgres
+  namespace: postgres
 spec:
   accessModes:
     - ReadWriteMany
   resources:
     requests:
-      storage: 32Gi
-  selector:
-    matchLabels:
-      nautobot-storage: postgres
-  storageClassName: manual
+      storage: 100Gi
+  storageClassName: local
   volumeMode: Filesystem

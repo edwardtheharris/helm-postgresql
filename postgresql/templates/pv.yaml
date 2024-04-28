@@ -19,19 +19,15 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  labels:
-    name: nautobot-postgres
-    nautobot-storage: postgres
-    type: local
-  name: nautobot-postgres
+  name: postgres
 spec:
   accessModes:
     - ReadWriteMany
   capacity:
-    storage: 32Gi
-  hostPath:
-    path: "/srv/k8s/k8s01/volumes/nautobot/postgres"
-  storageClassName: manual
+    storage: 100Gi
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local
+  volumeMode: Block
 # ---
 # apiVersion: v1
 # kind: PersistentVolume

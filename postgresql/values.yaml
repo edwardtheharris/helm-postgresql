@@ -56,7 +56,7 @@ livenessProbe:
 nameOverride: ""
 nodeSelector: {}
 persistence:
-  size: 32Gi
+  size: 100Gi
 podAnnotations: {}
 podLabels: {}
 podSecurityContext: {}
