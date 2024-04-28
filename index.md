@@ -1,20 +1,23 @@
-.. Helm PostgreSQL documentation master file, created by
+---
+abstract: >-
+   Helm PostgreSQL documentation master file, created by
    sphinx-quickstart on Sun Apr 28 15:35:08 2024.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
+authors: Xander Harris
+date: 2024-04-28
+title: Postgres Helm Chart
+---
 
-Welcome to Helm PostgreSQL's documentation!
-===========================================
+## Repository Contents
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+```{toctree}
+:maxdepth: 2
+:caption: Contents:
+```
 
+## Indices and tables
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+* {ref}`genindex`
+* {ref}`modindex`
+* {ref}`search`
