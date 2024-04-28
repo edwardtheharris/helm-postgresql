@@ -1,9 +1,11 @@
 ---
 apiVersion: storage.k8s.io/v1
+allowVolumeExpansion: true
 kind: StorageClass
 metadata:
-    annotations:
-        storageclass.kubernetes.io/is-default-class: true
     name: local-storage
+    annotations:
+        storageclass.kubernetes.io/is-default-class: "true"
 provisioner: kubernetes.io/no-provisioner
+reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer
