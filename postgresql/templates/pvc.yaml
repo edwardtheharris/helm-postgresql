@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   annotations:
     name: postgres
-    volume.kubernetes.io/storage-provisioner: local
+    volume.kubernetes.io/storage-provisioner: {{ .Values.persistence.storageClass }}
   finalizers:
     - kubernetes.io/pvc-protection
   labels:

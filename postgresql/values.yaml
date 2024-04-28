@@ -57,6 +57,7 @@ nameOverride: ""
 nodeSelector: {}
 persistence:
   size: 100Gi
+  storageClass: local-storage
 podAnnotations: {}
 podLabels:
   org.brick-house.service: postgres
