@@ -21,7 +21,7 @@ autoscaling:
 fullnameOverride: "postgres"
 image:
   pullPolicy: IfNotPresent
-  repository: postgresql
+  repository: postgres
   # Overrides the image tag whose default is the chart appVersion.
   tag: "14-alpine"
 
@@ -58,7 +58,8 @@ nodeSelector: {}
 persistence:
   size: 100Gi
 podAnnotations: {}
-podLabels: {}
+podLabels:
+  org.brick-house.service: postgres
 podSecurityContext: {}
 # fsGroup: 2000
 postgresql:
@@ -77,7 +78,10 @@ readinessProbe:
   successThreshold: 1 # Minimum consecutive successes for the probe to be considered successful
   timeoutSeconds: 1 # When the probe times out
 replicaCount: 1
-resources: {}
+resources:
+  limits:
+    cpu: 1
+    memory: 2048Mi
 ###
 # We usually recommend not to specify default resources and to leave this as a conscious
 # choice for the user. This also increases chances charts run on environments with little
@@ -114,7 +118,7 @@ tolerations: []
 type: StatefulSet
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
-- mountPath: "/srv/k8s/k8s01/volumes/postgres"
+- mountPath: "/mnt/k8s/psql"
   name: data
   readOnly: false
 # - name: foo
