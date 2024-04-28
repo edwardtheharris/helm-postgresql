@@ -10,6 +10,7 @@ gitpython = "*"
 [dev-packages]
 sphinx = "*"
 sphinx-autobuild = "*"
+myst-parser = {extras = ["linkify"], version = "*"}
 
 [requires]
 python_version = "3.12"
