@@ -7,5 +7,17 @@ title: Continuous Integration and Delivery
 
 Or something like it.
 
+## Helm Workflow
+
 ```{autoyaml} .github/workflows/helm.yml
+```
+
+## Pages Workflow
+
+```{autoyaml} .github/workflows/pages.yml
+```
+
+## Dependabot Settings
+
+```{autoyaml} .github/dependabot.yml
 ```
