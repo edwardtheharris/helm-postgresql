@@ -68,7 +68,7 @@ myst_enable_extensions = [
     "tasklist",
 ]
 myst_title_to_header = True
-project = 'Hacker Rank Challenges'
+project = 'PostgreSQL Helm Chart'
 rst_epilog = """
 .. sectionauthor:: Xander Harris <xandertheharris@gmail.com>
 """
