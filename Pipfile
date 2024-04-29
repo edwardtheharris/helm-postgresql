@@ -15,6 +15,3 @@ myst-parser = {extras = ["linkify"], version = "*"}
 sphinx-design = "*"
 "sphinxcontrib.autoyaml" = "*"
 sphinx-nefertiti = "*"
-
-[requires]
-python_version = "3.12"
