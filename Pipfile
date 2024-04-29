@@ -6,10 +6,12 @@ name = "pypi"
 [packages]
 loguru = "*"
 gitpython = "*"
+zerovm-sphinx-theme = "*"
 
 [dev-packages]
 sphinx = "*"
 sphinx-autobuild = "*"
-
-[requires]
-python_version = "3.12"
+myst-parser = {extras = ["linkify"], version = "*"}
+sphinx-design = "*"
+"sphinxcontrib.autoyaml" = "*"
+sphinx-nefertiti = "*"
