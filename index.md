@@ -13,7 +13,17 @@ title: Postgres Helm Chart
 
 ```{toctree}
 :maxdepth: 2
-:caption: Contents:
+
+manifests/index
+postgresql/index
+workflows/index
+```
+
+```{toctree}
+cicd
+license
+readme
+security
 ```
 
 ## Indices and tables
