@@ -53,7 +53,7 @@ livenessProbe:
   periodSeconds: 10 # How often to perform the probe
   successThreshold: 1 # Minimum consecutive successes for the probe to be considered successful after having failed
   timeoutSeconds: 5 # When the probe times out
-nameOverride: ""
+nameOverride: "postgres"
 nodeSelector: {}
 persistence:
   size: 100Gi
@@ -65,6 +65,7 @@ podSecurityContext: {}
 # fsGroup: 2000
 postgresql:
   database: postgres
+  name: postgres
   password: postgres
   username: postgres
 readinessProbe:

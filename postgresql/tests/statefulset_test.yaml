@@ -1,3 +1,8 @@
+###
+# ```{rubric} StatefulSet Test Suite
+# ```
+# ---
+# Tests to validate the deployment of the described StatefulSet.
 suite: test for statefulset
 templates:
   - statefulset.yaml
@@ -5,5 +10,11 @@ tests:
   - asserts:
       - isKind:
           of: StatefulSet
+      - equal:
+          path: metadata.name
+          pattern: postgres
     it: should be a StatefulSet
+    set:
+      postgresql:
+        name: postgres
 
