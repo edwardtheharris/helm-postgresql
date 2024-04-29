@@ -34,10 +34,10 @@ permissions:
 #
 jobs:
   ###
-  # ```{rubric} helm lint
+  # ```{rubric} Helm Setup
   # ```
   # ---
-  # Check that the markdown in this repo is up to our (arbitrary) standards.
+  # Setup Helm requirements for GHA.
   #
   # ```{literalinclude} /.github/workflows/helm.yml
   # :language: yaml
@@ -57,14 +57,14 @@ jobs:
           sudo apt-get install -y helm
 
   ###
-  # ```{rubric} helm lint
+  # ```{rubric} Helm Lint
   # ```
   # ---
-  # Check that the markdown in this repo is up to our (arbitrary) standards.
+  # Check that the Helm YAML in this repo will pass lint.
   #
-  # ```{literalinclude} /.github/workflows/pages.yml
+  # ```{literalinclude} /.github/workflows/helm.yml
   # :language: yaml
-  # :start-at: "  markdownlint:\n"
+  # :start-at: "  helmlint:\n"
   # :end-before: "###\n"
   # ```
   helmlint:
@@ -76,15 +76,14 @@ jobs:
       - run: helm lint postgresql/
 
   ###
-  # ```{rubric} helm lint
+  # ```{rubric} Helm Test
   # ```
   # ---
-  # Check that the markdown in this repo is up to our (arbitrary) standards.
+  # Run the helm unit tests without enough coverage.
   #
-  # ```{literalinclude} /.github/workflows/pages.yml
+  # ```{literalinclude} /.github/workflows/helm.yml
   # :language: yaml
-  # :start-at: "  markdownlint:\n"
-  # :end-before: "###\n"
+  # :start-at: "  helmtest:\n"
   # ```
   helmtest:
     name: helmtest
@@ -98,4 +97,4 @@ jobs:
         uses: mikepenz/action-junit-report@v4
         if: success() || failure() # always run even if the previous step fails
         with:
-          report_paths: '**/*.xml'
+          report_paths: 'results.xml'
