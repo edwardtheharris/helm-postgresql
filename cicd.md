@@ -6,3 +6,6 @@ title: Continuous Integration and Delivery
 ---
 
 Or something like it.
+
+```{autoyaml} .github/workflows/helm.yml
+```
