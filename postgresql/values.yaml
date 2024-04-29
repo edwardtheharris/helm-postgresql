@@ -27,8 +27,8 @@ image:
 
 imagePullSecrets: []
 ingress:
-  annotations: {}
-  # kubernetes.io/ingress.class: nginx
+  annotations:
+    kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
   className: ""
   enabled: false
@@ -60,7 +60,7 @@ persistence:
   storageClass: local-storage
 podAnnotations: {}
 podLabels:
-  org.brick-house.service: postgres
+  app: postgres
 podSecurityContext: {}
 # fsGroup: 2000
 postgresql:
