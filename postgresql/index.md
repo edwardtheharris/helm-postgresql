@@ -9,8 +9,12 @@ title: PostgreSQL Chart and Templates
 
 Typical Helm chart rules.
 
-```{toctree}
-tests/index
-templates/index
-templates/tests/index
+### Chart
+
+```{autoyaml} postgresql/Chart.yaml
+```
+
+#### Values
+
+```{autoyaml} postgresql/values.yaml
 ```
