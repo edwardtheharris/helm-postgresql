@@ -73,7 +73,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@main
-      - run: helm lint postgresql/
+      - run: helm lint postgresql/*[.yaml|txt|tpl]
 
   ###
   # ```{rubric} helm lint

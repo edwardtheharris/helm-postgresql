@@ -28,6 +28,7 @@ exclude_patterns = [
     '.venv/*',
     '.tmp/*',
     '.pytest_cache/*',
+    'postgresql/templates/NOTES.txt',
 ]
 
 extensions = [
@@ -76,5 +77,6 @@ show_authors=True
 source_suffix = {
     '.md': 'markdown',
     '.rst': 'restructuredtext',
+    '.txt': 'markdown',
 }
 templates_path = ['_templates']
