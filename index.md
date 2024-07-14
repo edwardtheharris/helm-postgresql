@@ -15,7 +15,7 @@ title: Postgres Helm Chart
 :maxdepth: 2
 
 manifests/index
-postgresql/index
+postgres/index
 workflows/index
 ```
 
