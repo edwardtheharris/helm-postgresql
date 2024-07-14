@@ -7,12 +7,12 @@ affinity:
   requiredDuringSchedulingIgnoredDuringExecution:
     nodeSelectorTerms:
       - matchExpressions:
-          - key: postgresql
+          - key: postgres
             operator: In
             values:
               - true
 autoscaling:
-  enabled: false
+  enabled: true
   maxReplicas: 3
   minReplicas: 1
   targetCPUUtilizationPercentage: 80
@@ -120,7 +120,7 @@ tolerations: []
 type: StatefulSet
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
-- mountPath: "/mnt/k8s/psql"
+- mountPath: "/mnt/local/psql"
   name: data
   readOnly: false
 # - name: foo
