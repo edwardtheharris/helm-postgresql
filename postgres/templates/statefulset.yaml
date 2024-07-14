@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "postgresql.fullname" . }}
+  name: {{ .Values.postgresql.name }}
 spec:
   selector:
     matchLabels:
@@ -30,8 +30,8 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgresql-secret
-                  key: postgresql-password
+                  name: postgres
+                  key: password
           volumeMounts:
             - name: data
               mountPath: /var/lib/postgresql/data
