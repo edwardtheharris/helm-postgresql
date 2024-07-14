@@ -12,7 +12,7 @@
 #
 # ```{literalinclude} /.github/dependabot.yml
 # :language: yaml
-# :start-at: "version: 2\n"
+# :start-at: "updates:\n"
 # ```
 updates:
   - directory: "/"
