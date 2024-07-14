@@ -19,10 +19,6 @@ updates:
     package-ecosystem: "pip"
     schedule:
       interval: "weekly"
-    ###
-    # Location of package manifests
-    #
-    # - `"/"`
   - directory: "postgresql/"
     ###
     # See documentation for possible values
