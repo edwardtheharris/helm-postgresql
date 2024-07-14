@@ -7,14 +7,15 @@ title: PostgreSQL Chart and Templates
 
 ## Usage
 
-Typical Helm chart rules.
+This chart deploys a non-replicated PostgreSQL instance to a Kubernetes
+cluster.
 
 ### Chart
 
-```{autoyaml} postgresql/Chart.yaml
+```{autoyaml} postgres/Chart.yaml
 ```
 
 #### Values
 
-```{autoyaml} postgresql/values.yaml
+```{autoyaml} postgres/values.yaml
 ```
