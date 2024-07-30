@@ -1,0 +1,115 @@
+###
+# tests/statefulset_test.yaml
+suite: "PostgreSQL StatefulSet Test Suite"
+release:
+  name: postgresql
+templates:
+  - "templates/statefulset.yaml"
+values:
+  - ../values.yaml
+
+tests:
+  - it: "should render StatefulSet with correct metadata"
+    asserts:
+      - isKind:
+          of: StatefulSet
+      - matchRegex:
+          path: metadata.name
+          pattern: "^postgres$"
+
+  - it: "should render StatefulSet with correct selector and serviceName"
+    asserts:
+      - equal:
+          path: spec.serviceName
+          value: "postgresql"
+      - equal:
+          path: spec.replicas
+          value: 1
+      - equal:
+          path: spec.selector.matchLabels
+          value:
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/version: 1.16.0
+            helm.sh/chart: postgresql-0.0.2
+            statefulset.kubernetes.io/instance: postgresql
+            statefulset.kubernetes.io/name: postgresql
+
+  - it: "should render StatefulSet with correct pod template metadata"
+    asserts:
+      - equal:
+          path: spec.template.metadata.labels
+          value:
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/version: 1.16.0
+            helm.sh/chart: postgresql-0.0.2
+            statefulset.kubernetes.io/instance: postgresql
+            statefulset.kubernetes.io/name: postgresql
+    documentSelector:
+      path: kind
+      value: StatefulSet
+
+  - it: "should render StatefulSet with correct container configurations"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].name
+          value: "postgres"
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: "postgres:16-alpine"
+      - equal:
+          path: spec.template.spec.containers[0].imagePullPolicy
+          value: "IfNotPresent"
+      - equal:
+          path: spec.template.spec.containers[0].ports[0].containerPort
+          value: 5432
+      - equal:
+          path: spec.template.spec.containers[0].ports[0].name
+          value: "postgres"
+      - equal:
+          path: spec.template.spec.containers[0].env[0].name
+          value: "POSTGRES_DB"
+      - equal:
+          path: spec.template.spec.containers[0].env[0].value
+          value: "postgres"
+      - equal:
+          path: spec.template.spec.containers[0].env[1].name
+          value: "POSTGRES_USER"
+      - equal:
+          path: spec.template.spec.containers[0].env[1].value
+          value: "postgres"
+      - equal:
+          path: spec.template.spec.containers[0].env[2].name
+          value: "POSTGRES_PASSWORD"
+      - equal:
+          path: spec.template.spec.containers[0].env[2].valueFrom.secretKeyRef.name
+          value: "postgres"
+      - equal:
+          path: spec.template.spec.containers[0].env[2].valueFrom.secretKeyRef.key
+          value: "password"
+      - equal:
+          path: spec.template.spec.containers[0].volumeMounts[0].name
+          value: "postgresql"
+      - equal:
+          path: spec.template.spec.containers[0].volumeMounts[0].mountPath
+          value: "/var/lib/postgresql/"
+
+  - it: "should render StatefulSet with correct volumeClaimTemplates"
+    asserts:
+      - equal:
+          path: spec.volumeClaimTemplates[0].metadata.name
+          value: "postgresql"
+      - equal:
+          path: spec.volumeClaimTemplates[0].spec.accessModes[0]
+          value: "ReadWriteOnce"
+      - equal:
+          path: spec.volumeClaimTemplates[0].spec.resources.requests.storage
+          value: "50Gi"
+      - equal:
+          path: spec.volumeClaimTemplates[0].spec.storageClassName
+          value: "csi-driver-lvm-linear"
+      - equal:
+          path: spec.volumeClaimTemplates[0].spec.volumeMode
+          value: "Filesystem"
+    documentSelector:
+      path: kind
+      value: StatefulSet

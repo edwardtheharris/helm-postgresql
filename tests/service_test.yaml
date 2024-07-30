@@ -1,0 +1,49 @@
+###
+# tests/service_test_suite.yaml
+suite: "PostgreSQL Service Test Suite"
+release:
+  name: postgresql
+templates:
+  - "templates/service.yaml"
+values:
+  - ../values.yaml
+
+tests:
+  - it: "should render Service with correct metadata"
+    asserts:
+      - isKind:
+          of: Service
+      - matchRegex:
+          path: metadata.name
+          pattern: "^postgresql$"
+      - equal:
+          path: metadata.labels
+          value:
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/version: 1.16.0
+            helm.sh/chart: postgresql-0.0.2
+            statefulset.kubernetes.io/instance: postgresql
+            statefulset.kubernetes.io/name: postgresql
+
+  - it: "should render Service with correct spec configurations"
+    asserts:
+      - equal:
+          path: spec.type
+          value: "ClusterIP"
+      - equal:
+          path: spec.ports[0].port
+          value: 5432
+      - equal:
+          path: spec.ports[0].targetPort
+          value: 5432
+      - equal:
+          path: spec.ports[0].protocol
+          value: "TCP"
+      - equal:
+          path: spec.ports[0].name
+          value: "postgres"
+      - equal:
+          path: spec.selector
+          value:
+            statefulset.kubernetes.io/name: postgresql
+            statefulset.kubernetes.io/instance: postgresql
