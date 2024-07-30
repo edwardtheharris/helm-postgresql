@@ -46,8 +46,8 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "postgresql.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "postgresql.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+statefulset.kubernetes.io/name: {{ include "postgresql.name" . }}
+statefulset.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*

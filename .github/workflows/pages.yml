@@ -70,6 +70,8 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
+          check_name: markdownlint
+          comment_title: "Markdown Lint"
           files: markdownlint-cli2-junit.xml
   ###
   # ```{rubric} Build GitHub Pages Site
