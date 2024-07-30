@@ -73,7 +73,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@main
-      - run: helm lint postgres/
+      - run: helm lint .
 
   ###
   # ```{rubric} Helm Test
@@ -92,7 +92,12 @@ jobs:
     steps:
       - uses: actions/checkout@main
       - run: helm plugin install https://github.com/helm-unittest/helm-unittest
-      - run: helm unittest -f 'postgres/tests/*test.yaml' -t JUnit -o results.xml postgres/
+      - run: helm repo add lvm https://helm.metal-stack.io
+      - run: helm dependency build .
+      - run: helm dependency update .
+      - run: helm unittest -d -f 'tests/*.yaml' .
+      - run: helm unittest -f 'tests/*.yaml' -t JUnit -o results.xml .
+        if: success() || failure() # always run even if the previous step fails
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v4
         if: success() || failure() # always run even if the previous step fails
