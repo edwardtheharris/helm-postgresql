@@ -7,10 +7,10 @@ affinity:
   requiredDuringSchedulingIgnoredDuringExecution:
     nodeSelectorTerms:
       - matchExpressions:
-          - key: app.kubernetes.io/postgres
+          - key: kubernetes.io/os
             operator: In
             values:
-              - true
+              - linux
 autoscaling:
   enabled: false
   maxReplicas: 3
@@ -59,7 +59,7 @@ nodeSelector:
 persistence:
   claim:
     enabled: false
-  name: postgresql-data
+  name: postgresql
   size: 50Gi
   storageClass: csi-driver-lvm-linear
 podAnnotations: {}
