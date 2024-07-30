@@ -53,14 +53,15 @@ livenessProbe:
   periodSeconds: 10 # How often to perform the probe
   successThreshold: 1 # Minimum consecutive successes for the probe to be considered successful after having failed
   timeoutSeconds: 5 # When the probe times out
-nameOverride: "postgres"
+nameOverride: "postgresql"
 nodeSelector: {}
 persistence:
+  name: postgresql-data
   size: 100Gi
-  storageClass: local-storage
+  storageClass: csi-driver-lvm-linear
 podAnnotations: {}
 podLabels:
-  app: postgres
+  app: postgresql
 podSecurityContext: {}
 # fsGroup: 2000
 postgresql:
