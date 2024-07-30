@@ -5,8 +5,9 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "postgresql.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/name: {{ include "postgresql.name" . }}
+      app.kubernetes.io/postgres: 'true'
   serviceName: "{{ include "postgresql.fullname" . }}"
   replicas: {{ .Values.replicaCount }}
   template:
@@ -14,6 +15,7 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "postgresql.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/postgres: 'true'
     spec:
       containers:
         - name: postgres
@@ -33,13 +35,17 @@ spec:
                   name: postgres
                   key: password
           volumeMounts:
-            - name: data
-              mountPath: /var/lib/postgresql/data
+            - name: postgresql
+              mountPath: /var/lib/postgresql/
   volumeClaimTemplates:
-  - metadata:
-      name: data
-    spec:
-      accessModes: [ "ReadWriteMany" ]
-      resources:
-        requests:
-          storage: {{ .Values.persistence.size }}
+    - metadata:
+        name: {{ .Values.persistence.name }}
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size }}
+        storageClassName: {{ .Values.persistence.storageClass }}
+        volumeMode: Filesystem
+

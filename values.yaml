@@ -7,18 +7,18 @@ affinity:
   requiredDuringSchedulingIgnoredDuringExecution:
     nodeSelectorTerms:
       - matchExpressions:
-          - key: postgres
+          - key: app.kubernetes.io/postgres
             operator: In
             values:
               - true
 autoscaling:
-  enabled: true
+  enabled: false
   maxReplicas: 3
   minReplicas: 1
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-fullnameOverride: "postgres"
+fullnameOverride: "postgresql"
 image:
   pullPolicy: IfNotPresent
   repository: postgres
@@ -54,10 +54,13 @@ livenessProbe:
   successThreshold: 1 # Minimum consecutive successes for the probe to be considered successful after having failed
   timeoutSeconds: 5 # When the probe times out
 nameOverride: "postgresql"
-nodeSelector: {}
+nodeSelector:
+  kubernetes.io/os: linux
 persistence:
+  claim:
+    enabled: false
   name: postgresql-data
-  size: 100Gi
+  size: 50Gi
   storageClass: csi-driver-lvm-linear
 podAnnotations: {}
 podLabels:
@@ -109,7 +112,8 @@ service:
   type: ClusterIP
 serviceAccount:
   # Annotations to add to the service account
-  annotations: {}
+  annotations:
+    serviceaccount.kubernetes.io/name: postgres
   # Automatically mount a ServiceAccount's API credentials?
   automount: true
   # Specifies whether a service account should be created
@@ -120,10 +124,10 @@ serviceAccount:
 tolerations: []
 type: StatefulSet
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts:
-- mountPath: "/mnt/local/psql"
-  name: data
-  readOnly: false
+volumeMounts: []
+# - mountPath: "/mnt/local/psql"
+#   name: data
+#   readOnly: false
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
