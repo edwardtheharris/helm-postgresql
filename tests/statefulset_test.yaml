@@ -26,26 +26,27 @@ tests:
           path: spec.replicas
           value: 1
       - equal:
-          path: spec.selector.matchLabels."app.kubernetes.io/instance"
-          value: "postgresql"
-      - equal:
-          path: spec.selector.matchLabels."app.kubernetes.io/name"
-          value: "postgresql"
-      - equal:
-          path: spec.selector.matchLabels."app.kubernetes.io/postgres"
-          value: "true"
+          path: spec.selector.matchLabels
+          value:
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/version: 1.16.0
+            helm.sh/chart: postgresql-0.0.2
+            statefulset.kubernetes.io/instance: postgresql
+            statefulset.kubernetes.io/name: postgresql
 
   - it: "should render StatefulSet with correct pod template metadata"
     asserts:
       - equal:
-          path: spec.template.metadata.labels."app.kubernetes.io/name"
-          value: "postgresql"
-      - equal:
-          path: spec.template.metadata.labels."app.kubernetes.io/instance"
-          value: "postgresql"
-      - equal:
-          path: spec.template.metadata.labels."app.kubernetes.io/postgres"
-          value: "true"
+          path: spec.template.metadata.labels
+          value:
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/version: 1.16.0
+            helm.sh/chart: postgresql-0.0.2
+            statefulset.kubernetes.io/instance: postgresql
+            statefulset.kubernetes.io/name: postgresql
+    documentSelector:
+      path: kind
+      value: StatefulSet
 
   - it: "should render StatefulSet with correct container configurations"
     asserts:
@@ -109,3 +110,6 @@ tests:
       - equal:
           path: spec.volumeClaimTemplates[0].spec.volumeMode
           value: "Filesystem"
+    documentSelector:
+      path: kind
+      value: StatefulSet
