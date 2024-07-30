@@ -1,8 +1,12 @@
 ###
 # tests/service_test_suite.yaml
 suite: "PostgreSQL Service Test Suite"
+release:
+  name: postgresql
 templates:
   - "templates/service.yaml"
+values:
+  - ../values.yaml
 
 tests:
   - it: "should render Service with correct metadata"
@@ -13,20 +17,13 @@ tests:
           path: metadata.name
           pattern: "^postgresql$"
       - equal:
-          path: metadata.labels."helm.sh/chart"
-          value: "postgresql-0.0.2"
-      - equal:
-          path: metadata.labels."statefulset.kubernetes.io/name"
-          value: "postgresql"
-      - equal:
-          path: metadata.labels."statefulset.kubernetes.io/instance"
-          value: "postgresql"
-      - equal:
-          path: metadata.labels."app.kubernetes.io/version"
-          value: "1.16.0"
-      - equal:
-          path: metadata.labels."app.kubernetes.io/managed-by"
-          value: "Helm"
+          path: metadata.labels
+          value:
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/version: 1.16.0
+            helm.sh/chart: postgresql-0.0.2
+            statefulset.kubernetes.io/instance: postgresql
+            statefulset.kubernetes.io/name: postgresql
 
   - it: "should render Service with correct spec configurations"
     asserts:
@@ -46,8 +43,7 @@ tests:
           path: spec.ports[0].name
           value: "postgres"
       - equal:
-          path: spec.selector."statefulset.kubernetes.io/name"
-          value: "postgresql"
-      - equal:
-          path: spec.selector."statefulset.kubernetes.io/instance"
-          value: "postgresql"
+          path: spec.selector
+          value:
+            statefulset.kubernetes.io/name: postgresql
+            statefulset.kubernetes.io/instance: postgresql
