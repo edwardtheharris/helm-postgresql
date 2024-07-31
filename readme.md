@@ -1,7 +1,10 @@
 ---
-abstract: A helm chart to install PostgreSQL.
-authors: Xander Harris
-date: 2024-04-02
+abstract: >-
+    A Helm chart to install PostgreSQL in single or clustered configuration.
+authors:
+    - name: Xander Harris
+      email: xandertheharris@gmail.com
+date: 2024-07-31
 title: Helm PostgreSQL
 ---
 

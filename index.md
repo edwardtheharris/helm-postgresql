@@ -11,13 +11,7 @@ title: Postgres Helm Chart
 
 ## Repository Contents
 
-```{toctree}
-:caption: contents
-:maxdepth: 2
-
-manifests/index
-postgres/index
-workflows/index
+```{contents}
 ```
 
 ```{toctree}

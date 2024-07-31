@@ -15,3 +15,5 @@ myst-parser = {extras = ["linkify"], version = "*"}
 sphinx-design = "*"
 "sphinxcontrib.autoyaml" = "*"
 sphinx-nefertiti = "*"
+sphinx-book-theme = "*"
+version-query = "*"

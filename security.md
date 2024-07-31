@@ -1,26 +1,25 @@
 ---
 abstract: This is the security policy of this project, such as it is.
-authors: GitHub
+authors:
+    - name: GitHub
+      email: git@github.com
 date: 2024-04-28
 title: Security Policy
 ---
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+The second patch release is the first properly functional release, so the
+first is not supported.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| 0.0.3   | :white_check_mark: |
+| 0.0.2   | :white_check_mark: |
+| 0.0.1   | :x:                |
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
-
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+If you find a potential vulnerability, please create an issue
+[here](https://github.com/edwardtheharris/helm-postgresql/issues) with the
+details.
