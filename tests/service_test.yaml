@@ -21,7 +21,7 @@ tests:
           value:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/version: 1.16.0
-            helm.sh/chart: postgresql-0.0.2
+            helm.sh/chart: postgresql-0.0.3
             statefulset.kubernetes.io/instance: postgresql
             statefulset.kubernetes.io/name: postgresql
 

@@ -12,11 +12,11 @@ title: Security Policy
 The second patch release is the first properly functional release, so the
 first is not supported.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 0.0.3   | :white_check_mark: |
-| 0.0.2   | :white_check_mark: |
-| 0.0.1   | :x:                |
+Version|Supported
+---|---
+0.0.3|✅
+0.0.2|✅
+0.0.1|❌
 
 ## Reporting a Vulnerability
 

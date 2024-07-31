@@ -14,7 +14,7 @@ import version_query
 def get_release():
     """Query the current release for the project."""
     repo_path = Path('.')
-    ret_value = version_query.git_query.query_git_repo(repo_path)
+    ret_value = version_query.git_query.query_git_repo(repo_path).to_str()
     return ret_value
 
 author = 'Xander Harris'
@@ -35,7 +35,7 @@ exclude_patterns = [
     '.venv/*',
     '.tmp/*',
     '.pytest_cache/*',
-    'postgresql/templates/NOTES.txt',
+    'templates/NOTES.txt',
 ]
 
 extensions = [
@@ -46,6 +46,7 @@ extensions = [
     'sphinx.ext.githubpages',
     'sphinx.ext.intersphinx',
     'sphinxcontrib.autoyaml',
+    'sphinxemoji.sphinxemoji',
 ]
 
 # -- Options for HTML output -------------------------------------------------
