@@ -15,6 +15,12 @@ title: Postgres Helm Chart
 ```
 
 ```{toctree}
+:caption: general
+
+tests/index
+```
+
+```{toctree}
 :caption: meta
 
 cicd
@@ -29,7 +35,8 @@ security
 * {ref}`modindex`
 * {ref}`search`
 
-## Usage
+```{include} readme.md
+```
 
 ### Chart
 

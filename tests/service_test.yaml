@@ -1,6 +1,15 @@
 ###
-# tests/service_test_suite.yaml
-suite: "PostgreSQL Service Test Suite"
+# ```{rubric} PostgreSQL Service Test Suite
+# ```
+# ---
+# Tests for the Service template.
+#
+# ```{literalinclude} /tests/service_test.yaml
+# :language: yaml
+# :caption: tests/service_test_suite.yaml
+# :start-at: "suite: PostgreSQL Service Test Suite\n"
+# ```
+suite: PostgreSQL Service Test Suite
 release:
   name: postgresql
 templates:

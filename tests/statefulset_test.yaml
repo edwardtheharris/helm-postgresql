@@ -1,5 +1,13 @@
 ###
-# tests/statefulset_test.yaml
+# ```{rubric} StatefulSet Test
+# ```
+# ---
+# Tests the StatefulSet template values.
+#
+# ```{literalinclude} /tests/statefulset_test.yaml
+# :language: yaml
+# :caption: tests/statefulset_test.yaml
+# ```
 suite: "PostgreSQL StatefulSet Test Suite"
 release:
   name: postgresql

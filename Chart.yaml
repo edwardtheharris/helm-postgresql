@@ -4,12 +4,16 @@
 # ---
 # This chart deploys a PostgreSQL server in either single server or cluster
 # configuration.
+#
+# ```{literalinclude} /Chart.yaml
+# :language: yaml
+# ```
 apiVersion: v2
 ###
-# This is the version number of the application being deployed. This version number should be
-# incremented each time you make changes to the application. Versions are not expected to
-# follow Semantic Versioning. They should reflect the version the application is using.
-# It is recommended to use it with quotes.
+# This is the version number of the application being deployed. This version
+# number should be incremented each time you make changes to the application.
+# Versions are not expected to follow Semantic Versioning. They should reflect
+# the version the application is using. It is recommended to use it with quotes.
 appVersion: "1.16.0"
 description: PostgreSQL deployed as a single server or a cluster.
 icon: file://./assets/icon/postgresql.jpeg
