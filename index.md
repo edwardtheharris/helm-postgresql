@@ -23,7 +23,7 @@ tests/index
 ```{toctree}
 :caption: meta
 
-cicd
+.github/index
 license
 readme
 security
@@ -46,4 +46,7 @@ security
 #### Values
 
 ```{autoyaml} values.yaml
+```
+
+```{sectionauthor} Xander Harris <xandertheharris@gmail.com>
 ```

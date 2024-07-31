@@ -1,7 +1,14 @@
 ###
-# Default values for postgresql.
-# This is a YAML-formatted file.
+# ```{rubric} Default values for PostgreSQL deployment
+# ```
+# ---
+# Default values for postgresql. This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+#
+# ```{literalinclude} values.yaml
+# :caption: values.yaml
+# :language: yaml
+# ```
 affinity:
   nodeAffinity:
   requiredDuringSchedulingIgnoredDuringExecution:
@@ -15,21 +22,26 @@ autoscaling:
   enabled: false
   maxReplicas: 3
   minReplicas: 1
-  targetCPUUtilizationPercentage: 80
+  ###
   # targetMemoryUtilizationPercentage: 80
+  targetCPUUtilizationPercentage: 80
 
 fullnameOverride: "postgresql"
 image:
   pullPolicy: IfNotPresent
   repository: postgres
+  ###
   # Overrides the image tag whose default is the chart appVersion.
   tag: "16-alpine"
 
 imagePullSecrets: []
 ingress:
+  ###
+  # ```{code-block} yaml
+  # kubernetes.io/tls-acme: "true"
+  # ```
   annotations:
     kubernetes.io/ingress.class: nginx
-  # kubernetes.io/tls-acme: "true"
   className: ""
   enabled: false
   hosts:
@@ -37,10 +49,13 @@ ingress:
     paths:
     - path: /
       pathType: ImplementationSpecific
-  tls: []
+  ###
+  # ```{code-block} yaml
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+  # ```
+  tls: []
 
 livenessProbe:
   exec:
@@ -48,11 +63,22 @@ livenessProbe:
     - pg_isready
     - -U
     - postgres
-  failureThreshold: 3 # When to give up and restart the container
-  initialDelaySeconds: 30 # Delay before the first probe is initiated
-  periodSeconds: 10 # How often to perform the probe
-  successThreshold: 1 # Minimum consecutive successes for the probe to be considered successful after having failed
-  timeoutSeconds: 5 # When the probe times out
+  ###
+  # When to give up and restart the container
+  failureThreshold: 3
+  ###
+  # Delay before the first probe is initiated
+  initialDelaySeconds: 30
+  ###
+  # How often to perform the probe
+  periodSeconds: 10
+  ###
+  # Minimum consecutive successes for the probe to be considered successful
+  # after having failed.
+  successThreshold: 1
+  ###
+  # When the probe times out
+  timeoutSeconds: 5
 nameOverride: "postgresql"
 nodeSelector:
   kubernetes.io/os: linux
@@ -65,8 +91,11 @@ persistence:
 podAnnotations: {}
 podLabels:
   app: postgresql
-podSecurityContext: {}
+###
+# ```{code-block} yaml
 # fsGroup: 2000
+# ```
+podSecurityContext: {}
 postgresql:
   database: postgres
   name: postgres
@@ -78,65 +107,95 @@ readinessProbe:
     - pg_isready
     - -U
     - postgres
-  failureThreshold: 3 # When to give up, marking the Pod as Unready
-  initialDelaySeconds: 5 # Delay before the first probe is initiated, can be shorter than liveness probe
-  periodSeconds: 5 # How often to perform the probe
-  successThreshold: 1 # Minimum consecutive successes for the probe to be considered successful
-  timeoutSeconds: 1 # When the probe times out
+  ###
+  # When to give up, marking the Pod as Unready
+  failureThreshold: 3
+  ###
+  # Delay before the first probe is initiated, can be shorter than
+  # liveness probe
+  initialDelaySeconds: 5
+  ###
+  # How often to perform the probe
+  periodSeconds: 5
+  ###
+  # Minimum consecutive successes for the probe to be considered successful
+  successThreshold: 1
+  ###
+  # When the probe times out
+  timeoutSeconds: 1
 replicaCount: 1
-resources:
-  limits:
-    cpu: 1
-    memory: 2048Mi
 ###
-# We usually recommend not to specify default resources and to leave this as a conscious
-# choice for the user. This also increases chances charts run on environments with little
-# resources, such as Minikube. If you do want to specify resources, uncomment the following
-# lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+# We usually recommend not to specify default resources and to leave this as
+# a conscious choice for the user. This also increases chances charts run
+# on environments with little resources, such as Minikube. If you do want to
+# specify resources, uncomment the following lines, adjust them as necessary,
+# and remove the curly braces after `resources:`{l=yaml}.
+#
+# ```{code-block} yaml
 # limits:
 #   cpu: 100m
 #   memory: 128Mi
 # requests:
 #   cpu: 100m
-#   memory: 128Mi
-
-securityContext: {}
+#   memory: 128M
+# ```
+resources:
+  limits:
+    cpu: 1
+    memory: 2048Mi
+###
+# ```{code-block} yaml
 # capabilities:
 #   drop:
 #   - ALL
 # readOnlyRootFilesystem: true
 # runAsNonRoot: true
 # runAsUser: 1000
+# ```
+securityContext: {}
 service:
   port: 5432
   type: ClusterIP
 serviceAccount:
+  ###
   # Annotations to add to the service account
   annotations:
     serviceaccount.kubernetes.io/name: postgres
+  ###
   # Automatically mount a ServiceAccount's API credentials?
   automount: true
+  ###
   # Specifies whether a service account should be created
   create: true
+  ###
   # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
+  # If not set and create is true, a name is generated using the
+  # fullname template
   name: "postgres"
 tolerations: []
 type: StatefulSet
+###
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
+#
+# ```{code-block} yaml
 # - mountPath: "/mnt/local/psql"
 #   name: data
 #   readOnly: false
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
+# ```
+volumeMounts: []
+###
 # Additional volumes on the output Deployment definition.
-volumes: []
+#
+# ```{code-block} yaml
 # - name: foo
 #   secret:
 #     secretName: mysecret
 #     optional: false
+# ```
+volumes: []
 
 
 
