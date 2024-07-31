@@ -1,6 +1,15 @@
 ###
-# tests/service_test_suite.yaml
-suite: "PostgreSQL Service Test Suite"
+# ```{rubric} PostgreSQL Service Test Suite
+# ```
+# ---
+# Tests for the Service template.
+#
+# ```{literalinclude} /tests/service_test.yaml
+# :language: yaml
+# :caption: tests/service_test_suite.yaml
+# :start-at: "suite: PostgreSQL Service Test Suite\n"
+# ```
+suite: PostgreSQL Service Test Suite
 release:
   name: postgresql
 templates:
@@ -21,7 +30,7 @@ tests:
           value:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/version: 1.16.0
-            helm.sh/chart: postgresql-0.0.2
+            helm.sh/chart: postgresql-0.0.3
             statefulset.kubernetes.io/instance: postgresql
             statefulset.kubernetes.io/name: postgresql
 

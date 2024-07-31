@@ -11,19 +11,19 @@ title: Postgres Helm Chart
 
 ## Repository Contents
 
-```{toctree}
-:caption: contents
-:maxdepth: 2
+```{contents}
+```
 
-manifests/index
-postgres/index
-workflows/index
+```{toctree}
+:caption: general
+
+tests/index
 ```
 
 ```{toctree}
 :caption: meta
 
-cicd
+.github/index
 license
 readme
 security
@@ -35,7 +35,8 @@ security
 * {ref}`modindex`
 * {ref}`search`
 
-## Usage
+```{include} readme.md
+```
 
 ### Chart
 
@@ -45,4 +46,7 @@ security
 #### Values
 
 ```{autoyaml} values.yaml
+```
+
+```{sectionauthor} Xander Harris <xandertheharris@gmail.com>
 ```

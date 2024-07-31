@@ -1,6 +1,15 @@
 ###
-# tests/statefulset_test.yaml
-suite: "PostgreSQL StatefulSet Test Suite"
+# ```{rubric} StatefulSet Test
+# ```
+# ---
+# Tests the StatefulSet template values.
+#
+# ```{literalinclude} /tests/statefulset_test.yaml
+# :language: yaml
+# :caption: tests/statefulset_test.yaml
+# :start-at: "suite: PostgreSQL StatefulSet Test Suite"
+# ```
+suite: PostgreSQL StatefulSet Test Suite
 release:
   name: postgresql
 templates:
@@ -30,7 +39,7 @@ tests:
           value:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/version: 1.16.0
-            helm.sh/chart: postgresql-0.0.2
+            helm.sh/chart: postgresql-0.0.3
             statefulset.kubernetes.io/instance: postgresql
             statefulset.kubernetes.io/name: postgresql
 
@@ -41,7 +50,7 @@ tests:
           value:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/version: 1.16.0
-            helm.sh/chart: postgresql-0.0.2
+            helm.sh/chart: postgresql-0.0.3
             statefulset.kubernetes.io/instance: postgresql
             statefulset.kubernetes.io/name: postgresql
     documentSelector:
