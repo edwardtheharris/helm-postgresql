@@ -23,6 +23,10 @@ To run these tests you need to install the unittest plugin.
 
 2. Run the tests.
 
+   ```{code-block} shell
+   helm unittest -f 'tests/*.yaml' .
+   ```
+
 ### Service Test
 
 ```{autoyaml} tests/service_test.yaml

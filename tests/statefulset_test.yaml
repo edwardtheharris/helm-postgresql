@@ -7,8 +7,9 @@
 # ```{literalinclude} /tests/statefulset_test.yaml
 # :language: yaml
 # :caption: tests/statefulset_test.yaml
+# :start-at: "suite: PostgreSQL StatefulSet Test Suite"
 # ```
-suite: "PostgreSQL StatefulSet Test Suite"
+suite: PostgreSQL StatefulSet Test Suite
 release:
   name: postgresql
 templates:
