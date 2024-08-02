@@ -22,3 +22,6 @@
 *.tmproj
 .vscode/
 .venv/
+.github/
+_build/
+.gnupg/
