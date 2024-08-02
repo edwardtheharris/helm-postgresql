@@ -31,7 +31,7 @@ spec:
                   name: postgres
                   key: password
           volumeMounts:
-            - name: postgresql
+            - name: {{ .Values.persistence.name }}
               mountPath: /var/lib/postgresql/
   volumeClaimTemplates:
     - metadata:
