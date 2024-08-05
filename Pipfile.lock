@@ -630,11 +630,11 @@
         },
         "sphinx-nefertiti": {
             "hashes": [
-                "sha256:d66395c81add1606850d2d1189d189da88c6793423c213a035469360913700ee",
-                "sha256:eedfe079288678f53e0a564360e89bd8077d4325ac279ebb4c06e9adbb80e9f4"
+                "sha256:4d0288cf651e56d0ad824390d35542f1e2d736f1faeb9dd7da80a07b584fef97",
+                "sha256:e7619ae66abeab293d2dce08fb5cffeb08a7956e50299778c615bf9fa8b69258"
             ],
             "index": "pypi",
-            "version": "==0.3.4"
+            "version": "==0.3.7"
         },
         "sphinxcontrib-applehelp": {
             "hashes": [
