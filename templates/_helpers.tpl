@@ -35,6 +35,8 @@ Common labels
 */}}
 {{- define "postgresql.labels" -}}
 helm.sh/chart: {{ include "postgresql.chart" . }}
+statefulset.kubernetes.io/name: {{ include "postgresql.name" . }}
+statefulset.kubernetes.io/instance: {{ .Release.Name }}
 {{ include "postgresql.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
@@ -46,8 +48,9 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "postgresql.selectorLabels" -}}
-statefulset.kubernetes.io/name: {{ include "postgresql.name" . }}
-statefulset.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: database
+app.kubernetes.io/name: {{ include "postgresql.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
