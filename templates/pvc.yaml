@@ -6,9 +6,7 @@ metadata:
   annotations:
     name: {{ .Values.persistence.name }}
   labels:
-    app.kubernetes.io/component: primary
-    app.kubernetes.io/instance: postgresql
-    app.kubernetes.io/name: postgresql
+    {{- include "postgresql.selectorLabels" . | nindent 4 }}
   name: postgresql
   namespace: postgresql
 spec:
