@@ -36,7 +36,7 @@ tests:
     asserts:
       - equal:
           path: spec.type
-          value: "ClusterIP"
+          value: "NodePort"
       - equal:
           path: spec.ports[0].port
           value: 5432

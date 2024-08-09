@@ -56,7 +56,7 @@ html_logo = '_static/img/postgresql.png'
 html_favicon = '_static/img/postgresql.png'
 html_static_path = ['_static']
 html_theme = 'sphinx_book_theme'
-myst_dmath_double_inline=True
+myst_dmath_double_inline = True
 myst_enable_extensions = [
     "amsmath",
     "attrs_block",
