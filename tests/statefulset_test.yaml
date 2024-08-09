@@ -105,7 +105,7 @@ tests:
           value: "postgresql"
       - equal:
           path: spec.volumeClaimTemplates[0].spec.accessModes[0]
-          value: "ReadWriteOnce"
+          value: "ReadWriteMany"
       - equal:
           path: spec.volumeClaimTemplates[0].spec.resources.requests.storage
           value: "50Gi"
