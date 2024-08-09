@@ -1,17 +1,19 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ .Values.postgresql.name }}
+  name: {{ include "postgresql.name" . }}
+  labels:
+    {{- include "postgresql.selectorLabels" . | nindent 4 }}
 spec:
   selector:
     matchLabels:
-      {{- include "postgresql.labels" . | nindent 6 }}
+      {{- include "postgresql.selectorLabels" . | nindent 6 }}
   serviceName: "{{ include "postgresql.fullname" . }}"
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
-        {{- include "postgresql.labels" . | nindent 8 }}
+        {{- include "postgresql.selectorLabels" . | nindent 8 }}
     spec:
       containers:
         - name: postgres
@@ -44,4 +46,3 @@ spec:
             storage: {{ .Values.persistence.size }}
         storageClassName: {{ .Values.persistence.storageClass }}
         volumeMode: Filesystem
-
