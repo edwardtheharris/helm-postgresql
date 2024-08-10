@@ -41,6 +41,7 @@ exclude_patterns = [
 extensions = [
     'myst_parser',
     'sphinx_design',
+    'sphinx_git',
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.githubpages',

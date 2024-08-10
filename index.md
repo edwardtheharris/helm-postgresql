@@ -4,7 +4,9 @@ abstract: >-
    sphinx-quickstart on Sun Apr 28 15:35:08 2024.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
-authors: Xander Harris
+authors:
+  - name: Xander Harris
+    email: xandertheharris@gmail.com
 date: 2024-04-28
 title: Postgres Helm Chart
 ---
@@ -24,6 +26,7 @@ tests/index
 :caption: meta
 
 .github/index
+changelog
 license
 readme
 security
