@@ -1,0 +1,90 @@
+6c1ca8e Fix version
+94a4c98 Merge pull request #23 from edwardtheharris/15-fix-pvc-issue
+7fda95f Update directory
+94ef947 Update toctree
+f4dc3b8 Update autoyaml
+286ac18 Merge branch '15-fix-pvc-issue' of github.com:edwardtheharris/helm-postgresql into 15-fix-pvc-issue
+820df94 Fix tests
+5ea298d Merge branch 'main' into 15-fix-pvc-issue
+e1288d3 Merge branch '15-fix-pvc-issue' of github.com:edwardtheharris/helm-postgresql into 15-fix-pvc-issue
+a39d703 Update dependabot
+f0b5510 Merge pull request #25 from edwardtheharris/24-enable-code-scanning
+8ff4b00 Add code scanning
+4098372 Merge branch 'main' into 15-fix-pvc-issue
+89a2aae Update PVC cocd
+48d4934 Update storage code
+71cd794 Merge pull request #22 from edwardtheharris/dependabot/pip/pip-a8b23622d7
+028c119 Merge branch 'main' into dependabot/pip/pip-a8b23622d7
+39cb8b1 Merge pull request #21 from edwardtheharris/dependabot/pip/sphinx-nefertiti-0.3.4
+85488bb Bump certifi from 2024.6.2 to 2024.7.4 in the pip group
+fbe5279 Bump sphinx-nefertiti from 0.3.3 to 0.3.4
+35374e8 Merge pull request #17 from edwardtheharris/dependabot/pip/sphinx-nefertiti-0.3.3
+b9222c4 Bump sphinx-nefertiti from 0.3.2 to 0.3.3
+f4c217e Merge pull request #19 from edwardtheharris/dependabot/pip/sphinx-design-0.6.0
+6d70809 Bump sphinx-design from 0.5.0 to 0.6.0
+ea4e05a Merge pull request #20 from edwardtheharris/dependabot/pip/pip-ddb83f9140
+27dd25b Bump the pip group with 2 updates
+3ee28f8 Update name in statefulset
+2ace470 Drop duplicate pvc
+e8c8e98 Merge pull request #14 from edwardtheharris/dependabot/docker/postgresql/postgres-16-alpine
+c111aac Merge branch 'main' into dependabot/docker/postgresql/postgres-16-alpine
+fab064d Merge pull request #12 from edwardtheharris/3-add-ghp
+bf3c5ce Bump postgres from 14-alpine to 16-alpine in /postgresql
+ce688ef Update the templates
+0bb4161 Update titles
+96dd84f Adjust install
+7b22212 Drop python version requirement
+f5ce50f Update project
+6026300 Update cicd page
+75f6110 Fix helm workflow comments
+820f338 Fix reports paths, lint
+3be0231 Update helm lint
+32735b3 Add documentation
+0558e12 Update pipfile
+dce1e48 Add plugins
+6ac125a Add index files
+c066adc Update for pages
+11bd925 Merge pull request #10 from edwardtheharris/dependabot/pip/sphinx-autobuild-2024.4.16
+3b0d54c Merge branch 'main' into dependabot/pip/sphinx-autobuild-2024.4.16
+e461ad4 Merge pull request #7 from edwardtheharris/6-add-manifests
+de80f27 Update templates
+756e450 Update the templates
+5ee7b56 Add storage class
+7eb44c3 Update postgres
+e6988ce Update labels, other stuff
+c5cb8fe Update affinity
+e30bfdb Update name
+a6f32a2 Update annotations
+4e7ddbe Update default storage class
+7624120 Bump sphinx-autobuild from 2024.4.13 to 2024.4.16
+ea8937b Update replicas
+6095e1d Update ignore, settings
+fa2a6bc Merge branch 'main' into 6-add-manifests
+d2aa636 Merge pull request #9 from edwardtheharris/dependabot/pip/sphinx-autobuild-2024.4.13
+a57bc26 Bump sphinx-autobuild from 2024.2.4 to 2024.4.13
+335769c add manifests
+98162e0 add manifests
+9d6f7d0 add manifests
+78e9969 add manifests
+b915c06 add manifests
+2821961 Merge pull request #5 from edwardtheharris/4-enable-dependabot-for-docker
+f92b82c enable dependabot for docker
+a753cf5 enable dependabot for docker
+e39e54b Merge pull request #2 from edwardtheharris/1-initialize-chart
+10b5a91 initialize chart
+413e25c initialize chart
+8caa43a initialize chart
+ad161f8 initialize chart
+ed23b48 initialize chart
+5e4e64a initialize chart
+a4d606c initialize chart
+372e276 initialize chart
+f83e977 initialize chart
+88ea5b3 initialize chart
+f487ec5 initialize chart
+f6b5a86 initialize chart
+5704239 initialize chart
+731ad18 initialize chart
+faa29a8 initialize chart
+28f9133 initialize chart
+5619a7e initialize chart
