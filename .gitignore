@@ -5,3 +5,4 @@ _build
 *.xml
 venv/
 charts/
+reflog
