@@ -13,45 +13,45 @@ suite: PostgreSQL Service Test Suite
 release:
   name: postgresql
 templates:
-  - "templates/service.yaml"
+- "templates/service.yaml"
 values:
-  - ../values.yaml
+- ../values.yaml
 
 tests:
-  - it: "should render Service with correct metadata"
-    asserts:
-      - isKind:
-          of: Service
-      - matchRegex:
-          path: metadata.name
-          pattern: "^postgresql$"
-      - equal:
-          path: metadata.labels
-          value:
-            app.kubernetes.io/component: database
-            app.kubernetes.io/instance: postgresql
-            app.kubernetes.io/name: postgresql
+- it: "should render Service with correct metadata"
+  asserts:
+  - isKind:
+      of: Service
+  - matchRegex:
+      path: metadata.name
+      pattern: "^postgresql$"
+  - equal:
+      path: metadata.labels
+      value:
+        app.kubernetes.io/component: database
+        app.kubernetes.io/instance: postgresql
+        app.kubernetes.io/name: postgresql
 
-  - it: "should render Service with correct spec configurations"
-    asserts:
-      - equal:
-          path: spec.type
-          value: "NodePort"
-      - equal:
-          path: spec.ports[0].port
-          value: 5432
-      - equal:
-          path: spec.ports[0].targetPort
-          value: 5432
-      - equal:
-          path: spec.ports[0].protocol
-          value: "TCP"
-      - equal:
-          path: spec.ports[0].name
-          value: "postgres"
-      - equal:
-          path: spec.selector
-          value:
-            app.kubernetes.io/component: database
-            app.kubernetes.io/instance: postgresql
-            app.kubernetes.io/name: postgresql
+- it: "should render Service with correct spec configurations"
+  asserts:
+  - equal:
+      path: spec.type
+      value: "NodePort"
+  - equal:
+      path: spec.ports[0].port
+      value: 5432
+  - equal:
+      path: spec.ports[0].targetPort
+      value: 5432
+  - equal:
+      path: spec.ports[0].protocol
+      value: "TCP"
+  - equal:
+      path: spec.ports[0].name
+      value: "postgresql"
+  - equal:
+      path: spec.selector
+      value:
+        app.kubernetes.io/component: database
+        app.kubernetes.io/instance: postgresql
+        app.kubernetes.io/name: postgresql

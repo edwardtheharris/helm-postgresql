@@ -8,6 +8,8 @@ date: 2024-07-31
 title: Readme
 ---
 
+[![wakatime](https://wakatime.com/badge/github/edwardtheharris/helm-postgresql.svg)](https://wakatime.com/badge/github/edwardtheharris/helm-postgresql)
+
 This chart deploys PostgreSQL in either a single-node or cluster configuration.
 
 ## Usage

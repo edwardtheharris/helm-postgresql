@@ -5,9 +5,10 @@ kind: PersistentVolumeClaim
 metadata:
   annotations:
     name: {{ .Values.persistence.name }}
+    app.kubernetes.io/name: {{ .Release.Name }}
   labels:
     {{- include "postgresql.selectorLabels" . | nindent 4 }}
-  name: postgresql
+  name: {{ .Release.Name }}
   namespace: postgresql
 spec:
   accessModes:

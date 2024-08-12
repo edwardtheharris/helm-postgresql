@@ -30,7 +30,7 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres
+                  name: {{ .Release.Name }}
                   key: password
           volumeMounts:
             - name: {{ .Values.persistence.name }}

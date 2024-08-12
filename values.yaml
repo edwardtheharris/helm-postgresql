@@ -13,11 +13,11 @@ affinity:
   nodeAffinity:
   requiredDuringSchedulingIgnoredDuringExecution:
     nodeSelectorTerms:
-      - matchExpressions:
-          - key: kubernetes.io/os
-            operator: In
-            values:
-              - linux
+    - matchExpressions:
+      - key: kubernetes.io/os
+        operator: In
+        values:
+        - linux
 autoscaling:
   enabled: false
   maxReplicas: 3
@@ -25,7 +25,9 @@ autoscaling:
   ###
   # targetMemoryUtilizationPercentage: 80
   targetCPUUtilizationPercentage: 80
-
+database:
+  username: "postgres"
+  password: "postgres"
 fullnameOverride: "postgresql"
 image:
   pullPolicy: IfNotPresent
@@ -87,7 +89,7 @@ persistence:
     enabled: false
   name: postgresql
   size: 50Gi
-  storageClass: csi-driver-lvm-linear
+  storageClass: csi-lvm-linear
 podAnnotations: {}
 podLabels:
   app: postgresql
