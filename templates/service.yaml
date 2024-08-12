@@ -10,6 +10,6 @@ spec:
     - port: {{ .Values.service.port }}
       targetPort: 5432
       protocol: TCP
-      name: postgres
+      name: {{ .Release.Name }}
   selector:
     {{- include "postgresql.selectorLabels" . | nindent 4 }}

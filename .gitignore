@@ -6,3 +6,4 @@ _build
 venv/
 charts/
 reflog
+secrets/
