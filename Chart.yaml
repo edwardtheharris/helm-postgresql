@@ -7,17 +7,64 @@
 #
 # ```{literalinclude} /Chart.yaml
 # :language: yaml
+# :start-at: "apiVersion: v2\n"
+# :end-before: "###\n"
 # ```
 apiVersion: v2
+
 ###
+# ```{rubric} PostgreSQL version
+# ```
+# ---
 # This is the version number of the application being deployed. This version
 # number should be incremented each time you make changes to the application.
 # Versions are not expected to follow Semantic Versioning. They should reflect
 # the version the application is using. It is recommended to use it with quotes.
-appVersion: "1.16.0"
+# 
+# ```{literalinclude} /Chart.yaml
+# :language: yaml
+# :start-at: "apiVersion: v2\n"
+# :end-before: "###\n"
+# ```
+appVersion: "16.3"
+
+###
+# ```{rubric} Chart Description
+# ```
+# ---
+# This is the chart description.
+#
+# ```{literalinclude} /Chart.yaml
+# :language: yaml
+# :start-at: "adescription: PostgreSQL deployed as a single server or a cluster.\n"
+# :end-before: "###\n"
+# ```
 description: PostgreSQL deployed as a single server or a cluster.
+
+###
+# ```{rubric} Icon
+# ```
+# ---
+# Helm Chart icon path.
+#
+#
+# ```{literalinclude} /Chart.yaml
+# :language: yaml
+# :start-at: "apiVersion: v2\n"
+# :end-before: "###\n"
+# ```
 icon: file://./assets/icon/postgresql.jpeg
+
+###
+# 
+#
+# ```{literalinclude} /Chart.yaml
+# :language: yaml
+# :start-at: "apiVersion: v2\n"
+# :end-before: "###\n"
+# ```
 name: postgresql
+
 ###
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -27,9 +74,22 @@ name: postgresql
 # Library charts provide useful utilities or functions for the chart developer. They're included as
 # a dependency of application charts to inject those utilities and functions into the rendering
 # pipeline. Library charts do not define any templates and therefore cannot be deployed.
+# 
+# ```{literalinclude} /Chart.yaml
+# :language: yaml
+# :start-at: "apiVersion: v2\n"
+# :end-before: "###\n"
+# ```
 type: application
+
 ###
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
+# 
+# ```{literalinclude} /Chart.yaml
+# :language: yaml
+# :start-at: "apiVersion: v2\n"
+# :end-before: "###\n"
+# ```
 version: 0.0.3
