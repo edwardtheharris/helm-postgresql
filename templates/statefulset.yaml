@@ -1,19 +1,29 @@
+{{ if eq .Values.type "StatefulSet" }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "postgresql.name" . }}
+  name: {{ .Release.Name }}-{{ .Chart.Name }}
   labels:
-    {{- include "postgresql.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: database
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}-{{ .Chart.Name }}
+    app.kubernetes.io/part-of: {{ .Release.Name }}
 spec:
   selector:
     matchLabels:
-      {{- include "postgresql.selectorLabels" . | nindent 6 }}
-  serviceName: "{{ include "postgresql.fullname" . }}"
+      app.kubernetes.io/component: database
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/name: {{ .Release.Name }}-{{ .Chart.Name }}
+      app.kubernetes.io/part-of: {{ .Release.Name }}
+  serviceName: {{ .Release.Name }}-{{ .Chart.Name }}
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
-        {{- include "postgresql.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/part-of: {{ .Release.Name }}
+        app.kubernetes.io/component: database
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ .Release.Name }}-{{ .Chart.Name }}
     spec:
       containers:
         - name: postgres
@@ -33,11 +43,11 @@ spec:
                   name: {{ .Release.Name }}
                   key: password
           volumeMounts:
-            - name: {{ .Values.persistence.name }}
+            - name: {{ .Release.Name }}-{{ .Chart.Name }}
               mountPath: /var/lib/postgresql/
   volumeClaimTemplates:
     - metadata:
-        name: {{ .Values.persistence.name }}
+        name: {{ .Release.Name }}-{{ .Chart.Name }}
       spec:
         accessModes:
           - ReadWriteMany
@@ -46,3 +56,4 @@ spec:
             storage: {{ .Values.persistence.size }}
         storageClassName: {{ .Values.persistence.storageClass }}
         volumeMode: Filesystem
+{{ end }}
