@@ -5,11 +5,13 @@ metadata:
   labels:
     {{ include "postgresql.labels" . | nindent 4 }}
 spec:
-  type: ClusterIP
+  type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: 5432
+      targetPort: {{ .Values.service.port }}
       protocol: TCP
-      name: {{ .Chart.Name }}
+      name: {{ .Values.nameOverride }}
+  externalIPs: {{ .Values.service.externalIPs }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
   selector:
     {{ include "postgresql.selectorLabels" . | nindent 4 }}
