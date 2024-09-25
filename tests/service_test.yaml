@@ -39,7 +39,7 @@ tests:
   asserts:
   - equal:
       path: spec.type
-      value: "ClusterIP"
+      value: "LoadBalancer"
   - equal:
       path: spec.ports[0].port
       value: 5432

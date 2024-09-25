@@ -8,6 +8,8 @@
 # ```{literalinclude} values.yaml
 # :caption: values.yaml
 # :language: yaml
+# :start-at: "affinity:\n"
+# :end-before: "###\n"
 # ```
 affinity:
   nodeAffinity:
@@ -22,7 +24,6 @@ autoscaling:
   enabled: false
   maxReplicas: 3
   minReplicas: 1
-  ###
   # targetMemoryUtilizationPercentage: 80
   targetCPUUtilizationPercentage: 80
 database:
@@ -33,53 +34,70 @@ fullnameOverride: "postgresql"
 image:
   pullPolicy: IfNotPresent
   repository: postgres
-  ###
   # Overrides the image tag whose default is the chart appVersion.
   tag: "16-alpine"
-
 imagePullSecrets: []
+
+###
+# ```{rubric} Liveness Probe
+# ```
+# ---
+# Check that the service is live.
+#
+# ```{literalinclude} /values.yaml
+# :language: yaml
+# :start-at: "ingress:\n"
+# :end-before: "###\n"
+# ```
+#
+# ```{code-block} yaml
+# :caption: enable tls
+# kubernetes.io/tls-acme: "true"
+# tls:
+#  - secretName: chart-example-tls
+#    hosts:
+#      - chart-example.local
+# ```
 ingress:
-  ###
-  # ```{code-block} yaml
-  # kubernetes.io/tls-acme: "true"
-  # ```
   annotations:
     kubernetes.io/ingress.class: nginx
-  className: ""
-  enabled: false
+  className: nginx
+  enabled: true
   hosts:
-  - host: pg.svc.cluster.local
+  - host: pg.breeze-blocks.net
     paths:
     - path: /
       pathType: ImplementationSpecific
-  ###
-  # ```{code-block} yaml
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
-  # ```
+      name: postgresql
+      port: 5432
   tls: []
 
+###
+# ```{rubric} Liveness Probe
+# ```
+# ---
+# Check that the service is live.
+#
+# ```{literalinclude} /values.yaml
+# :language: yaml
+# :start-at: "livenessProbe:\n"
+# :end-before: "###\n"
+# ```
 livenessProbe:
   exec:
     command:
     - pg_isready
     - -U
     - postgres
-  ###
   # When to give up and restart the container
   failureThreshold: 3
-  ###
   # Delay before the first probe is initiated
   initialDelaySeconds: 30
-  ###
   # How often to perform the probe
   periodSeconds: 10
-  ###
   # Minimum consecutive successes for the probe to be considered successful
   # after having failed.
   successThreshold: 1
-  ###
   # When the probe times out
   timeoutSeconds: 5
 
@@ -99,6 +117,17 @@ nodeSelector:
   kubernetes.io/os: linux
 
 ###
+# ```{rubric} Persistence
+# ```
+# ---
+# Persistence and other pod configuration.
+#
+# ```{literalinclude} /values.yaml
+# :start-at: "persistence:\n"
+# :end-before: "###\n"
+# :language: yaml
+# ```
+#
 # ```{code-block} yaml
 # fsGroup: 2000
 # ```
@@ -113,31 +142,52 @@ podLabels:
   app: postgresql
 podSecurityContext: {}
 
+###
+# ```{rubric} Readiness Probe
+# ```
+# ---
+# Verify the service is ready for requests.
+#
+# ```{literalinclude} /values.yaml
+# :start-at: "readinessProbe:\n"
+# :end-before: "###\n"
+# :language: yaml
+# ```
+#
+# ```{code-block} yaml
+# fsGroup: 2000
+# ```
 readinessProbe:
   exec:
     command:
     - pg_isready
     - -U
     - postgres
-  ###
   # When to give up, marking the Pod as Unready
   failureThreshold: 3
-  ###
   # Delay before the first probe is initiated, can be shorter than
   # liveness probe
   initialDelaySeconds: 5
-  ###
   # How often to perform the probe
   periodSeconds: 5
-  ###
   # Minimum consecutive successes for the probe to be considered successful
   successThreshold: 1
-  ###
   # When the probe times out
   timeoutSeconds: 1
 replicaCount: 1
 
 ###
+# ```{rubric} Resources
+# ```
+# ---
+# Set request and limit for resources.
+#
+# ```{literalinclude} /values.yaml
+# :start-at: "resources:\n"
+# :end-before: "###\n"
+# :language: yaml
+# ```
+#
 # We usually recommend not to specify default resources and to leave this as
 # a conscious choice for the user. This also increases chances charts run
 # on environments with little resources, such as Minikube. If you do want to
@@ -163,6 +213,17 @@ resources:
     storage: 50Gi
 
 ###
+# ```{rubric} Security and Service
+# ```
+# ---
+# Define service and security context.
+#
+# ```{literalinclude} /values.yaml
+# :start-at: "securityContext:\n"
+# :end-before: "###\n"
+# :language: yaml
+# ```
+#
 # ```{code-block} yaml
 # capabilities:
 #   drop:
@@ -174,31 +235,30 @@ resources:
 securityContext: {}
 service:
   port: 5432
-  type: ClusterIP
+  type: LoadBalancer
+  loadBalancerIP: 192.168.5.5
+  externalIPs:
+  - 192.168.5.17
 
 ###
-# Additional volumeMounts on the output Deployment definition.
+# ```{rubric} Security and Service
+# ```
+# ---
+# Define service and security context.
 #
-# ```{code-block} yaml
-# - mountPath: "/mnt/local/psql"
-#   name: data
-#   readOnly: false
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+# ```{literalinclude} /values.yaml
+# :start-at: "securityContext:\n"
+# :end-before: "###\n"
+# :language: yaml
 # ```
 serviceAccount:
-  ###
   # Annotations to add to the service account
   annotations:
-    serviceaccount.kubernetes.io/name: postgres
-  ###
+    app.kubernetes.io/name: postgresql
   # Automatically mount a ServiceAccount's API credentials?
   automount: true
-  ###
   # Specifies whether a service account should be created
   create: true
-  ###
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the
   # fullname template
@@ -207,6 +267,16 @@ tolerations: []
 type: StatefulSet
 
 ###
+# ```{rubric} Volumes
+# ```
+# ---
+# Define volumes and mounts.
+#
+# ```{literalinclude} /values.yaml
+# :start-at: "volumeMounts: []\n"
+# :language: yaml
+# ```
+#
 # Additional volumeMounts on the output Deployment definition.
 #
 # ```{code-block} yaml
@@ -217,9 +287,7 @@ type: StatefulSet
 #   mountPath: "/etc/foo"
 #   readOnly: true
 # ```
-volumeMounts: []
-
-###
+#
 # Additional volumes on the output Deployment definition.
 #
 # ```{code-block} yaml
@@ -228,7 +296,5 @@ volumeMounts: []
 #     secretName: mysecret
 #     optional: false
 # ```
+volumeMounts: []
 volumes: []
-
-
-
