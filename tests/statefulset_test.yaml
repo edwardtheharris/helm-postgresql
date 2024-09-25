@@ -14,6 +14,8 @@ release:
   name: postgresql
 templates:
 - "templates/statefulset.yaml"
+set:
+  type: StatefulSet
 values:
 - ../values.yaml
 
@@ -24,13 +26,13 @@ tests:
       of: StatefulSet
   - equal:
       path: metadata.name
-      value: postgresql-postgresql
+      value: postgresql
 
 - it: "should render StatefulSet with correct selector and serviceName"
   asserts:
   - equal:
       path: spec.serviceName
-      value: "postgresql-postgresql"
+      value: postgresql
   - equal:
       path: spec.replicas
       value: 1
@@ -39,8 +41,7 @@ tests:
       value:
         app.kubernetes.io/component: database
         app.kubernetes.io/instance: postgresql
-        app.kubernetes.io/name: postgresql-postgresql
-        app.kubernetes.io/part-of: postgresql
+        app.kubernetes.io/name: postgresql
 
 - it: "should render StatefulSet with correct pod template metadata"
   asserts:
@@ -49,8 +50,10 @@ tests:
       value:
         app.kubernetes.io/component: database
         app.kubernetes.io/instance: postgresql
-        app.kubernetes.io/name: postgresql-postgresql
-        app.kubernetes.io/part-of: postgresql
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: postgresql
+        app.kubernetes.io/version: "16.3"
+        helm.sh/chart: postgresql-0.0.3
   documentSelector:
     path: kind
     value: StatefulSet
@@ -95,7 +98,7 @@ tests:
       value: "password"
   - equal:
       path: spec.template.spec.containers[0].volumeMounts[0].name
-      value: "postgresql-postgresql"
+      value: "postgresql"
   - equal:
       path: spec.template.spec.containers[0].volumeMounts[0].mountPath
       value: "/var/lib/postgresql/"
@@ -104,7 +107,7 @@ tests:
   asserts:
   - equal:
       path: spec.volumeClaimTemplates[0].metadata.name
-      value: postgresql-postgresql
+      value: postgresql
   - equal:
       path: spec.volumeClaimTemplates[0].spec.accessModes[0]
       value: "ReadWriteMany"

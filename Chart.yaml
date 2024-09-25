@@ -20,10 +20,10 @@ apiVersion: v2
 # number should be incremented each time you make changes to the application.
 # Versions are not expected to follow Semantic Versioning. They should reflect
 # the version the application is using. It is recommended to use it with quotes.
-# 
+#
 # ```{literalinclude} /Chart.yaml
 # :language: yaml
-# :start-at: "apiVersion: v2\n"
+# :start-at: "appVersion: \"16.3\"\n"
 # :end-before: "###\n"
 # ```
 appVersion: "16.3"
@@ -36,7 +36,7 @@ appVersion: "16.3"
 #
 # ```{literalinclude} /Chart.yaml
 # :language: yaml
-# :start-at: "adescription: PostgreSQL deployed as a single server or a cluster.\n"
+# :start-at: "description: PostgreSQL deployed as a single server or a cluster.\n"
 # :end-before: "###\n"
 # ```
 description: PostgreSQL deployed as a single server or a cluster.
@@ -50,17 +50,17 @@ description: PostgreSQL deployed as a single server or a cluster.
 #
 # ```{literalinclude} /Chart.yaml
 # :language: yaml
-# :start-at: "apiVersion: v2\n"
+# :start-at: "icon: file://./assets/icon/postgresql.jpeg\n"
 # :end-before: "###\n"
 # ```
 icon: file://./assets/icon/postgresql.jpeg
 
 ###
-# 
+#
 #
 # ```{literalinclude} /Chart.yaml
 # :language: yaml
-# :start-at: "apiVersion: v2\n"
+# :start-at: "name: postgresql\n"
 # :end-before: "###\n"
 # ```
 name: postgresql
@@ -74,10 +74,10 @@ name: postgresql
 # Library charts provide useful utilities or functions for the chart developer. They're included as
 # a dependency of application charts to inject those utilities and functions into the rendering
 # pipeline. Library charts do not define any templates and therefore cannot be deployed.
-# 
+#
 # ```{literalinclude} /Chart.yaml
 # :language: yaml
-# :start-at: "apiVersion: v2\n"
+# :start-at: "type: application\n"
 # :end-before: "###\n"
 # ```
 type: application
@@ -86,10 +86,10 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-# 
+#
 # ```{literalinclude} /Chart.yaml
 # :language: yaml
-# :start-at: "apiVersion: v2\n"
+# :start-at: "version: 0.0.3\n"
 # :end-before: "###\n"
 # ```
 version: 0.0.3

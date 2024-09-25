@@ -28,6 +28,7 @@ autoscaling:
 database:
   username: "postgres"
   password: "postgres"
+  name: postgres
 fullnameOverride: "postgresql"
 image:
   pullPolicy: IfNotPresent
@@ -81,9 +82,26 @@ livenessProbe:
   ###
   # When the probe times out
   timeoutSeconds: 5
-nameOverride: "postgresql"
+
+###
+# ```{rubric} Name Override
+# ```
+# ---
+# Name and node selector config.
+#
+# ```{literalinclude} /values.yaml
+# :language: yaml
+# :start-at: "nameOverride: postgresql\n"
+# :end-before: "###\n"
+# ```
+nameOverride: postgresql
 nodeSelector:
   kubernetes.io/os: linux
+
+###
+# ```{code-block} yaml
+# fsGroup: 2000
+# ```
 persistence:
   claim:
     enabled: false
@@ -93,16 +111,8 @@ persistence:
 podAnnotations: {}
 podLabels:
   app: postgresql
-###
-# ```{code-block} yaml
-# fsGroup: 2000
-# ```
 podSecurityContext: {}
-postgresql:
-  database: postgres
-  name: postgres
-  password: postgres
-  username: postgres
+
 readinessProbe:
   exec:
     command:
@@ -126,6 +136,7 @@ readinessProbe:
   # When the probe times out
   timeoutSeconds: 1
 replicaCount: 1
+
 ###
 # We usually recommend not to specify default resources and to leave this as
 # a conscious choice for the user. This also increases chances charts run
@@ -145,6 +156,12 @@ resources:
   limits:
     cpu: 1
     memory: 2048Mi
+    storage: 100Gi
+  requests:
+    cpu: 500m
+    memory: 1024Mi
+    storage: 50Gi
+
 ###
 # ```{code-block} yaml
 # capabilities:
@@ -158,6 +175,18 @@ securityContext: {}
 service:
   port: 5432
   type: ClusterIP
+
+###
+# Additional volumeMounts on the output Deployment definition.
+#
+# ```{code-block} yaml
+# - mountPath: "/mnt/local/psql"
+#   name: data
+#   readOnly: false
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+# ```
 serviceAccount:
   ###
   # Annotations to add to the service account
@@ -173,9 +202,10 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the
   # fullname template
-  name: "postgres"
+  name: "postgresql"
 tolerations: []
 type: StatefulSet
+
 ###
 # Additional volumeMounts on the output Deployment definition.
 #
@@ -188,6 +218,7 @@ type: StatefulSet
 #   readOnly: true
 # ```
 volumeMounts: []
+
 ###
 # Additional volumes on the output Deployment definition.
 #
