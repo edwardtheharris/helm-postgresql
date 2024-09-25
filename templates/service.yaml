@@ -1,12 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-{{ .Chart.Name }}
+  name: {{ .Values.nameOverride }}
   labels:
-    app.kubernetes.io/component: database
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/name: {{ .Release.Name }}-{{ .Chart.Name }}
-    app.kubernetes.io/part-of: {{ .Release.Name }}
+    {{ include "postgresql.labels" . | nindent 4 }}
 spec:
   type: ClusterIP
   ports:
@@ -15,7 +12,4 @@ spec:
       protocol: TCP
       name: {{ .Chart.Name }}
   selector:
-    app.kubernetes.io/component: database
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/name: {{ .Release.Name }}-{{ .Chart.Name }}
-    app.kubernetes.io/part-of: {{ .Release.Name }}
+    {{ include "postgresql.selectorLabels" . | nindent 4 }}

@@ -2,28 +2,19 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ .Release.Name }}-{{ .Chart.Name }}
+  name: {{ .Values.nameOverride }}
   labels:
-    app.kubernetes.io/component: database
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/name: {{ .Release.Name }}-{{ .Chart.Name }}
-    app.kubernetes.io/part-of: {{ .Release.Name }}
+    {{- include "postgresql.labels" . | nindent 4 }}
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/component: database
-      app.kubernetes.io/instance: {{ .Release.Name }}
-      app.kubernetes.io/name: {{ .Release.Name }}-{{ .Chart.Name }}
-      app.kubernetes.io/part-of: {{ .Release.Name }}
-  serviceName: {{ .Release.Name }}-{{ .Chart.Name }}
+      {{- include "postgresql.selectorLabels" . | nindent 6 }}
+  serviceName: {{ .Values.nameOverride }}
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/part-of: {{ .Release.Name }}
-        app.kubernetes.io/component: database
-        app.kubernetes.io/instance: {{ .Release.Name }}
-        app.kubernetes.io/name: {{ .Release.Name }}-{{ .Chart.Name }}
+        {{- include "postgresql.labels" . | nindent 8 }}
     spec:
       containers:
         - name: postgres
@@ -34,26 +25,30 @@ spec:
               name: postgres
           env:
             - name: POSTGRES_DB
-              value: "{{ .Values.postgresql.database }}"
+              value: "{{ .Values.database.name }}"
             - name: POSTGRES_USER
-              value: "{{ .Values.postgresql.username }}"
+              value: "{{ .Values.database.username }}"
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}
                   key: password
           volumeMounts:
-            - name: {{ .Release.Name }}-{{ .Chart.Name }}
+            - name: {{ .Values.nameOverride }}
               mountPath: /var/lib/postgresql/
+      serviceAccountName: {{ .Values.nameOverride }}
   volumeClaimTemplates:
     - metadata:
-        name: {{ .Release.Name }}-{{ .Chart.Name }}
+        name: {{ .Values.nameOverride }}
       spec:
         accessModes:
           - ReadWriteMany
+          - ReadWriteOnce
         resources:
+          limits:
+            storage: {{ .Values.resources.limits.storage }}
           requests:
-            storage: {{ .Values.persistence.size }}
+            storage: {{ .Values.resources.requests.storage }}
         storageClassName: {{ .Values.persistence.storageClass }}
         volumeMode: Filesystem
 {{ end }}
