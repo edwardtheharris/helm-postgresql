@@ -11,6 +11,9 @@ spec:
       {{- include "postgresql.selectorLabels" . | nindent 6 }}
   serviceName: {{ .Values.nameOverride }}
   replicas: {{ .Values.replicaCount }}
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
   template:
     metadata:
       labels:
@@ -37,11 +40,13 @@ spec:
             - name: {{ .Values.nameOverride }}
               mountPath: /var/lib/postgresql/
       nodeSelector:
-        kubernetes.io/hostname: k8s07.breeze-blocks.net
+        {{ .Values.nodeSelector | toYaml | nindent 8 }}
       serviceAccountName: {{ .Values.nameOverride }}
   volumeClaimTemplates:
     - metadata:
         name: {{ .Values.nameOverride }}
+        labels:
+          {{- include "postgresql.labels" . | nindent 10 }}
       spec:
         accessModes:
           - ReadWriteMany

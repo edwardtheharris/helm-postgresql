@@ -12,6 +12,9 @@
 suite: PostgreSQL Service Test Suite
 release:
   name: postgresql
+set:
+  service:
+    enabled: true
 templates:
 - "templates/service.yaml"
 values:
