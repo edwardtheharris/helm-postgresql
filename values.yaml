@@ -5,28 +5,64 @@
 # Default values for postgresql. This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 #
+# ```{code-block} yaml
+# :caption: affinity example
+# nodeAffinity:
+# requiredDuringSchedulingIgnoredDuringExecution:
+#   nodeSelectorTerms:
+#   - matchExpressions:
+#     - key: kubernetes.io/os
+#       operator: In
+#       values:
+#       - linux
+# ```
+#
 # ```{literalinclude} values.yaml
 # :caption: values.yaml
 # :language: yaml
 # :start-at: "affinity:\n"
 # :end-before: "###\n"
 # ```
-affinity:
-  nodeAffinity:
-  requiredDuringSchedulingIgnoredDuringExecution:
-    nodeSelectorTerms:
-    - matchExpressions:
-      - key: kubernetes.io/os
-        operator: In
-        values:
-        - linux
+affinity: {}
 autoscaling:
   enabled: false
   maxReplicas: 3
   minReplicas: 1
   # targetMemoryUtilizationPercentage: 80
   targetCPUUtilizationPercentage: 80
+certmanager:
+  enabled: false
+  isCA: false
+  organizations:
+  - default
+  commonName: postgresql.postgresql.svc.cluster.local
+  dnsNames:
+  - postgresql
+  - postgresql.postgresql.svc
+  - postgresql.postgresql.svc.cluster.local
+  issuerRef:
+    name: default
+    kind: ClusterIssuer
+
+###
+# ```{rubric} Database Configuration
+# ```
+# ---
+# Change the password, obviously.
+#
+# ```{literalinclude} values.yaml
+# :caption: values.yaml
+# :language: yaml
+# :start-at: "database:\n"
+# :end-before: "###\n"
+# ```
 database:
+  config:
+    enabled: false
+    ssl:
+      enabled: false
+      key: ''
+      cert: ''
   username: "postgres"
   password: "postgres"
   name: postgres
@@ -62,9 +98,9 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: nginx
   className: nginx
-  enabled: true
+  enabled: false
   hosts:
-  - host: pg.breeze-blocks.net
+  - host: pg.example.com
     paths:
     - path: /
       pathType: ImplementationSpecific
@@ -128,18 +164,31 @@ nodeSelector:
 # :language: yaml
 # ```
 #
+# ```code-block yaml
+# :caption: examples
+#
+# # EBS storage
+# persistence:
+#   storageClass: ebs.csi.aws.com
+#
+# # LVM storage
+# persistence:
+#   storageClass: csi-lvm-linear
+# ```
+#
 # ```{code-block} yaml
+# :caption: PSP examples
+#
 # fsGroup: 2000
 # ```
 persistence:
-  claim:
-    enabled: false
   name: postgresql
-  size: 50Gi
   storageClass: csi-lvm-linear
+  accessModes:
+  - ReadWriteOnce
 podAnnotations: {}
 podLabels:
-  app: postgresql
+  app.kubernetes.io/name: postgresql
 podSecurityContext: {}
 
 ###
@@ -234,6 +283,7 @@ resources:
 # ```
 securityContext: {}
 service:
+  enabled: false
   port: 5432
   type: LoadBalancer
   loadBalancerIP: 192.168.5.5

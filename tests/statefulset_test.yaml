@@ -123,3 +123,25 @@ tests:
   documentSelector:
     path: kind
     value: StatefulSet
+
+- it: "should render volumeClaimTemplates with correct StorageClass"
+  set:
+    persistence:
+      storageClass: gp2
+  asserts:
+    - equal:
+        path: spec.volumeClaimTemplates
+        value:
+          - metadata:
+              name: postgresql
+            spec:
+              accessModes:
+                - ReadWriteMany
+                - ReadWriteOnce
+              resources:
+                limits:
+                  storage: 100Gi
+                requests:
+                  storage: 50Gi
+              storageClassName: gp2
+              volumeMode: Filesystem
