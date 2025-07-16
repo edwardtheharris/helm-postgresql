@@ -37,7 +37,7 @@ spec:
             - name: {{ .Values.nameOverride }}
               mountPath: /var/lib/postgresql/
       nodeSelector:
-        kubernetes.io/hostname: k8s07.breeze-blocks.net
+        kubernetes.io/os: linux
       serviceAccountName: {{ .Values.nameOverride }}
   volumeClaimTemplates:
     - metadata:
