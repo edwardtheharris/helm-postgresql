@@ -48,9 +48,9 @@ spec:
           - ReadWriteOnce
         resources:
           limits:
-            storage: {{ .Values.resources.limits.storage }}
+            storage: 10G
           requests:
-            storage: {{ .Values.resources.requests.storage }}
-        storageClassName: {{ .Values.persistence.storageClass }}
+            storage: 5G
+        storageClassName: csi-lvm-linear
         volumeMode: Filesystem
 {{ end }}
