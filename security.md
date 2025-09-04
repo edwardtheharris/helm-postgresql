@@ -21,5 +21,5 @@ Version|Supported
 ## Reporting a Vulnerability
 
 If you find a potential vulnerability, please create an issue
-[in this repository's issue tracker](https://github.com/edwardtheharris/helm-postgresql/issues) 
+[in this repository's issue tracker](https://github.com/edwardtheharris/helm-postgresql/issues)
 with the details.
