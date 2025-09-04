@@ -23,7 +23,19 @@
 # :start-at: "affinity:\n"
 # :end-before: "###\n"
 # ```
+<<<<<<< Updated upstream
 affinity: {}
+=======
+affinity:
+  nodeAffinity:
+  requiredDuringSchedulingIgnoredDuringExecution:
+    nodeSelectorTerms:
+      - matchExpressions:
+          - key: kubernetes.io/os
+            operator: In
+            values:
+              - linux
+>>>>>>> Stashed changes
 autoscaling:
   enabled: false
   maxReplicas: 3
@@ -100,6 +112,7 @@ ingress:
   className: nginx
   enabled: false
   hosts:
+<<<<<<< Updated upstream
   - host: pg.example.com
     paths:
     - path: /
@@ -107,6 +120,18 @@ ingress:
       name: postgresql
       port: 5432
   tls: []
+=======
+    - host: pg.breeze-blocks.net
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+          name: postgresql
+          port: 5432
+  tls:
+    - secretName: postgres-tls
+      hosts:
+        - pg.breeze-blocks.net
+>>>>>>> Stashed changes
 
 ###
 # ```{rubric} Liveness Probe
@@ -122,9 +147,9 @@ ingress:
 livenessProbe:
   exec:
     command:
-    - pg_isready
-    - -U
-    - postgres
+      - pg_isready
+      - -U
+      - postgres
   # When to give up and restart the container
   failureThreshold: 3
   # Delay before the first probe is initiated
@@ -182,7 +207,14 @@ nodeSelector:
 # fsGroup: 2000
 # ```
 persistence:
+<<<<<<< Updated upstream
   name: postgresql
+=======
+  claim:
+    enabled: true
+  name: postgresql
+  size: 10Gi
+>>>>>>> Stashed changes
   storageClass: csi-lvm-linear
   accessModes:
   - ReadWriteOnce
@@ -209,9 +241,9 @@ podSecurityContext: {}
 readinessProbe:
   exec:
     command:
-    - pg_isready
-    - -U
-    - postgres
+      - pg_isready
+      - -U
+      - postgres
   # When to give up, marking the Pod as Unready
   failureThreshold: 3
   # Delay before the first probe is initiated, can be shorter than
@@ -286,9 +318,8 @@ service:
   enabled: false
   port: 5432
   type: LoadBalancer
-  loadBalancerIP: 192.168.5.5
   externalIPs:
-  - 192.168.5.17
+    - 192.168.5.80
 
 ###
 # ```{rubric} Security and Service
