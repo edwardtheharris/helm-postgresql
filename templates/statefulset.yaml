@@ -1,4 +1,4 @@
-{{ if eq .Values.type "StatefulSet" }}
+{{- if eq .Values.type "StatefulSet" -}}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -11,6 +11,9 @@ spec:
       {{- include "postgresql.selectorLabels" . | nindent 6 }}
   serviceName: {{ .Values.nameOverride }}
   replicas: {{ .Values.replicaCount }}
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
   template:
     metadata:
       labels:
@@ -31,26 +34,44 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Release.Name }}
+                  name: postgresql-{{ .Release.Name }}
                   key: password
+            {{ if .Values.certmanager.enabled }}
+            - name:  PGSSLCERT
+              value: /etc/pg/ssl/tls.crt
+            - name: PGSSLKEY
+              value: /etc/pg/ssl/tls.key
+            - name:  PGSSLCERTMODE
+              value: allow
+            - name: PGSSLROOTCERT
+              value: /etc/pg/ssl/ca.crt
+          {{ end }}
           volumeMounts:
             - name: {{ .Values.nameOverride }}
               mountPath: /var/lib/postgresql/
+              readOnly: false
+            {{- if .Values.database.config.enabled }}
+            {{- .Values.volumeMounts | toYaml | nindent 12 }}
+            {{- end -}}
+      {{- if .Values.database.config.enabled }}
+      volumes:
+        {{- .Values.volumes | toYaml | nindent 8 }}
+      {{ end }}
       nodeSelector:
-        kubernetes.io/os: linux
+        {{ .Values.nodeSelector | toYaml }}
       serviceAccountName: {{ .Values.nameOverride }}
   volumeClaimTemplates:
     - metadata:
         name: {{ .Values.nameOverride }}
+        labels:
+          {{- include "postgresql.labels" . | nindent 10 }}
       spec:
         accessModes:
-          - ReadWriteMany
-          - ReadWriteOnce
+          {{- .Values.persistence.accessModes | toYaml | nindent 10 }}
         resources:
           limits:
-            storage: 10G
+            storage: {{ .Values.resources.limits.storage }}
           requests:
-            storage: 5G
-        storageClassName: csi-lvm-linear
-        volumeMode: Filesystem
-{{ end }}
+            storage: {{ .Values.resources.requests.storage }}
+        storageClassName: {{ .Values.persistence.storageClass }}
+{{- end -}}

@@ -1,4 +1,5 @@
 _build
+__snapshot__/
 .gnupg/
 .values.yaml
 .vscode/
@@ -7,3 +8,4 @@ venv/
 charts/
 reflog
 secrets/
+test.yaml
