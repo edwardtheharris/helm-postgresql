@@ -23,19 +23,16 @@
 # :start-at: "affinity:\n"
 # :end-before: "###\n"
 # ```
-<<<<<<< Updated upstream
 affinity: {}
-=======
-affinity:
-  nodeAffinity:
-  requiredDuringSchedulingIgnoredDuringExecution:
-    nodeSelectorTerms:
-      - matchExpressions:
-          - key: kubernetes.io/os
-            operator: In
-            values:
-              - linux
->>>>>>> Stashed changes
+# affinity:
+#   nodeAffinity:
+#   requiredDuringSchedulingIgnoredDuringExecution:
+#     nodeSelectorTerms:
+#       - matchExpressions:
+#           - key: kubernetes.io/os
+#             operator: In
+#             values:
+#               - linux
 autoscaling:
   enabled: false
   maxReplicas: 3
@@ -46,12 +43,12 @@ certmanager:
   enabled: false
   isCA: false
   organizations:
-  - default
+    - default
   commonName: postgresql.postgresql.svc.cluster.local
   dnsNames:
-  - postgresql
-  - postgresql.postgresql.svc
-  - postgresql.postgresql.svc.cluster.local
+    - postgresql
+    - postgresql.postgresql.svc
+    - postgresql.postgresql.svc.cluster.local
   issuerRef:
     name: default
     kind: ClusterIssuer
@@ -73,8 +70,8 @@ database:
     enabled: false
     ssl:
       enabled: false
-      key: ''
-      cert: ''
+      key: ""
+      cert: ""
   username: "postgres"
   password: "postgres"
   name: postgres
@@ -112,26 +109,12 @@ ingress:
   className: nginx
   enabled: false
   hosts:
-<<<<<<< Updated upstream
-  - host: pg.example.com
-    paths:
-    - path: /
-      pathType: ImplementationSpecific
-      name: postgresql
-      port: 5432
-  tls: []
-=======
-    - host: pg.breeze-blocks.net
+    - host: pg.example.com
       paths:
         - path: /
           pathType: ImplementationSpecific
           name: postgresql
           port: 5432
-  tls:
-    - secretName: postgres-tls
-      hosts:
-        - pg.breeze-blocks.net
->>>>>>> Stashed changes
 
 ###
 # ```{rubric} Liveness Probe
@@ -207,17 +190,13 @@ nodeSelector:
 # fsGroup: 2000
 # ```
 persistence:
-<<<<<<< Updated upstream
   name: postgresql
-=======
   claim:
     enabled: true
-  name: postgresql
   size: 10Gi
->>>>>>> Stashed changes
   storageClass: csi-lvm-linear
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
 podAnnotations: {}
 podLabels:
   app.kubernetes.io/name: postgresql
@@ -318,8 +297,6 @@ service:
   enabled: false
   port: 5432
   type: LoadBalancer
-  externalIPs:
-    - 192.168.5.80
 
 ###
 # ```{rubric} Security and Service
