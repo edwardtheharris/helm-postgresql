@@ -1,9 +1,10 @@
+{{- if .Values.service.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.nameOverride }}
   labels:
-    {{ include "postgresql.labels" . | nindent 4 }}
+    {{- include "postgresql.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -14,4 +15,5 @@ spec:
   externalIPs: {{ .Values.service.externalIPs }}
   loadBalancerIP: {{ .Values.service.loadBalancerIP }}
   selector:
-    {{ include "postgresql.selectorLabels" . | nindent 4 }}
+    {{- include "postgresql.selectorLabels" . | nindent 4 }}
+{{- end -}}
