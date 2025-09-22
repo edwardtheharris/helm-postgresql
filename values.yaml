@@ -107,9 +107,9 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: nginx
   className: nginx
-  enabled: false
+  enabled: true
   hosts:
-    - host: pg.example.com
+    - host: pg.breeze-blocks.net
       paths:
         - path: /
           pathType: ImplementationSpecific
@@ -294,7 +294,7 @@ resources:
 # ```
 securityContext: {}
 service:
-  enabled: false
+  enabled: true
   port: 5432
   type: LoadBalancer
 

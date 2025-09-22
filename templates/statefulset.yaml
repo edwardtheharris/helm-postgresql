@@ -34,9 +34,9 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Release.Name }}
+                  name: postgresql-{{ .Release.Name }}
                   key: password
-            {{- if .Values.certmanager.enabled }}
+            {{ if .Values.certmanager.enabled }}
             - name:  PGSSLCERT
               value: /etc/pg/ssl/tls.crt
             - name: PGSSLKEY
@@ -45,7 +45,7 @@ spec:
               value: allow
             - name: PGSSLROOTCERT
               value: /etc/pg/ssl/ca.crt
-          {{ end -}}
+          {{ end }}
           volumeMounts:
             - name: {{ .Values.nameOverride }}
               mountPath: /var/lib/postgresql/
@@ -56,7 +56,7 @@ spec:
       {{- if .Values.database.config.enabled }}
       volumes:
         {{- .Values.volumes | toYaml | nindent 8 }}
-      {{ end -}}
+      {{ end }}
       nodeSelector:
         {{ .Values.nodeSelector | toYaml }}
       serviceAccountName: {{ .Values.nameOverride }}
