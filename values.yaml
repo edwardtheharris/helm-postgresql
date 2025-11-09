@@ -44,11 +44,11 @@ certmanager:
   isCA: false
   organizations:
     - default
-  commonName: postgresql.postgresql.svc.cluster.local
+  commonName: postgres.database.svc.cluster.local
   dnsNames:
-    - postgresql
-    - postgresql.postgresql.svc
-    - postgresql.postgresql.svc.cluster.local
+    - postgres
+    - postgres.database.svc
+    - postgres.database.svc.cluster.local
   issuerRef:
     name: default
     kind: ClusterIssuer
