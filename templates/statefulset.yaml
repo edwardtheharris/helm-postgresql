@@ -36,7 +36,6 @@ spec:
                 secretKeyRef:
                   name: postgresql-{{ .Release.Name }}
                   key: password
-            {{ if .Values.certmanager.enabled }}
             - name:  PGSSLCERT
               value: /etc/pg/ssl/tls.crt
             - name: PGSSLKEY
@@ -45,7 +44,6 @@ spec:
               value: allow
             - name: PGSSLROOTCERT
               value: /etc/pg/ssl/ca.crt
-          {{ end }}
           volumeMounts:
             - name: {{ .Values.nameOverride }}
               mountPath: /var/lib/postgresql/

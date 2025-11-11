@@ -39,19 +39,6 @@ autoscaling:
   minReplicas: 1
   # targetMemoryUtilizationPercentage: 80
   targetCPUUtilizationPercentage: 80
-certmanager:
-  enabled: false
-  isCA: false
-  organizations:
-    - default
-  commonName: postgres.database.svc.cluster.local
-  dnsNames:
-    - postgres
-    - postgres.database.svc
-    - postgres.database.svc.cluster.local
-  issuerRef:
-    name: default
-    kind: ClusterIssuer
 
 ###
 # ```{rubric} Database Configuration
@@ -105,7 +92,13 @@ imagePullSecrets: []
 # ```
 ingress:
   annotations:
-    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: comms-svc-int
+    cert-manager.io/common-name: postgres
+    cert-manager.io/subject-organizationalunits: engineering
+    cert-manager.io/subject-countries: US
+    cert-manager.io/email-sans: postgres@breeze-blocks.net
+    cert-manager.io/subject-provinces: CA
+    cert-manager.io/subject-localities: Los Angeles
   ingressClassName: nginx
   enabled: true
   hosts:
@@ -115,6 +108,10 @@ ingress:
           pathType: ImplementationSpecific
           name: postgres
           port: 5432
+  tls:
+    - secretName: postgres-tls
+      host:
+        - postgres.breeze-blocks.net
 
 ###
 # ```{rubric} Liveness Probe
