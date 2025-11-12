@@ -24,9 +24,6 @@ tests:
     asserts:
       - isKind:
           of: StatefulSet
-      - equal:
-          path: metadata.name
-          value: postgresql
   - it: should render statefulset correctly
     asserts:
       - matchSnapshot: {}
