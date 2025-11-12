@@ -1,4 +1,5 @@
 _build
+*.values.yaml
 __snapshot__/
 .gnupg/
 .values.yaml
