@@ -11,7 +11,7 @@
 # ```
 suite: PostgreSQL StatefulSet Test Suite
 release:
-  name: postgresql
+  name: postgres
 templates:
   - "templates/statefulset.yaml"
 set:
@@ -29,5 +29,4 @@ tests:
           value: postgresql
   - it: should render statefulset correctly
     asserts:
-      - matchSnapshot:
-          path: spec
+      - matchSnapshot: {}
