@@ -2,14 +2,14 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ .Values.nameOverride }}
+  name: {{ .Release.Name }}
   labels:
     {{- include "postgresql.labels" . | nindent 4 }}
 spec:
   selector:
     matchLabels:
       {{- include "postgresql.selectorLabels" . | nindent 6 }}
-  serviceName: {{ .Values.nameOverride }}
+  serviceName: {{ .Release.Name }}
   replicas: {{ .Values.replicaCount }}
   persistentVolumeClaimRetentionPolicy:
     whenDeleted: Retain
@@ -29,13 +29,18 @@ spec:
           env:
             - name: POSTGRES_DB
               value: "{{ .Values.database.name }}"
-            - name: POSTGRES_USER
-              value: "{{ .Values.database.username }}"
-            - name: POSTGRES_PASSWORD
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: username
+            - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}
                   key: password
+            - name: PGHOST
+              value: "{{ .Values.database.host }}"
             - name:  PGSSLCERT
               value: /etc/pg/ssl/tls.crt
             - name: PGSSLKEY
@@ -45,30 +50,30 @@ spec:
             - name: PGSSLROOTCERT
               value: /etc/pg/ssl/ca.crt
           volumeMounts:
-            - name: {{ .Values.nameOverride }}
+            - name: {{ .Release.Name }}
               mountPath: /var/lib/postgresql/
               readOnly: false
-            {{- if .Values.database.config.enabled }}
-            {{- .Values.volumeMounts | toYaml | nindent 12 }}
-            {{- end -}}
-      {{- if .Values.database.config.enabled }}
+            - name: ssl
+              mountPath: /etc/pg/
+              readOnly: true
       volumes:
-        {{- .Values.volumes | toYaml | nindent 8 }}
-      {{ end }}
+        - name: ssl
+          secret:
+            secretName: postgres-tls
+      imagePullSecrets:
+        - name: {{ .Values.image.pullSecret }}
       nodeSelector:
         {{ .Values.nodeSelector | toYaml }}
-      serviceAccountName: {{ .Values.nameOverride }}
+      serviceAccountName: {{ .Release.Name }}
   volumeClaimTemplates:
     - metadata:
-        name: {{ .Values.nameOverride }}
+        name: {{ .Release.Name }}
         labels:
           {{- include "postgresql.labels" . | nindent 10 }}
       spec:
         accessModes:
           {{- .Values.persistence.accessModes | toYaml | nindent 10 }}
         resources:
-          limits:
-            storage: {{ .Values.resources.limits.storage }}
           requests:
             storage: {{ .Values.resources.requests.storage }}
         storageClassName: {{ .Values.persistence.storageClass }}

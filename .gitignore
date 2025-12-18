@@ -2,7 +2,6 @@ _build
 *.values.yaml
 __snapshot__/
 .gnupg/
-.values.yaml
 .vscode/
 *.xml
 venv/
