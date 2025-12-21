@@ -60,13 +60,14 @@ database:
       key: ""
       cert: ""
   name: postgres
+  host: postgres.breeze-blocks.net
 fullnameOverride: "postgres"
 image:
-  pullPolicy: IfNotPresent
-  repository: postgres
+  pullPolicy: Always
+  repository: ghcr.io/edwardtheharris/helm-postgresql/postgres
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "16-alpine"
-  pullSecret: ""
+  tag: "0.0.3-2"
+  pullSecret: ghcr
 
 ###
 # ```{rubric} Liveness Probe
@@ -108,7 +109,7 @@ ingress:
           port: 5432
   tls:
     - secretName: postgres-tls
-      host:
+      hosts:
         - postgres.breeze-blocks.net
 
 ###
@@ -262,7 +263,7 @@ resources:
     memory: 2048Mi
   requests:
     cpu: 500m
-    memory: 1024Mi
+    memory: 256Mi
     storage: 100Gi
 
 ###
