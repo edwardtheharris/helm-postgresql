@@ -99,7 +99,7 @@ ingress:
     cert-manager.io/subject-provinces: CA
     cert-manager.io/subject-localities: Los Angeles
   ingressClassName: nginx
-  enabled: true
+  enabled: false
   hosts:
     - host: postgres.breeze-blocks.net
       paths:

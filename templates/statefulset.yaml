@@ -68,7 +68,8 @@ spec:
   volumeClaimTemplates:
     - metadata:
         name: {{ .Release.Name }}
-        annotations: external-provisioner.volume.kubernetes.io/finalizer
+        annotations: 
+          external-provisioner.volume.kubernetes.io/finalizer: pv-protection
         labels:
           {{- include "postgresql.labels" . | nindent 10 }}
       spec:
