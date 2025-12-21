@@ -104,7 +104,7 @@ ingress:
     - host: postgres.breeze-blocks.net
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
           name: postgres
           port: 5432
   tls:
