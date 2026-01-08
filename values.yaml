@@ -91,39 +91,6 @@ imagePullSecrets: []
 #
 # ```{literalinclude} /values.yaml
 # :language: yaml
-# :start-at: "ingress:\n"
-# :end-before: "###\n"
-# ```
-#
-# ```{code-block} yaml
-# :caption: enable tls
-# kubernetes.io/tls-acme: "true"
-# tls:
-#  - secretName: chart-example-tls
-#    hosts:
-#      - chart-example.local
-# ```
-ingress:
-  annotations:
-    kubernetes.io/ingress.class: nginx
-  className: nginx
-  enabled: true
-  hosts:
-    - host: pg.breeze-blocks.net
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-          name: postgresql
-          port: 5432
-
-###
-# ```{rubric} Liveness Probe
-# ```
-# ---
-# Check that the service is live.
-#
-# ```{literalinclude} /values.yaml
-# :language: yaml
 # :start-at: "livenessProbe:\n"
 # :end-before: "###\n"
 # ```
