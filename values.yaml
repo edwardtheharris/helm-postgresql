@@ -1,8 +1,8 @@
 ###
-# ```{rubric} Default values for postgres deployment
+# ```{rubric} Default values for PostgreSQL deployment
 # ```
 # ---
-# Default values for postgres. This is a YAML-formatted file.
+# Default values for postgresql. This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 #
 # ```{code-block} yaml
@@ -39,6 +39,19 @@ autoscaling:
   minReplicas: 1
   # targetMemoryUtilizationPercentage: 80
   targetCPUUtilizationPercentage: 80
+certmanager:
+  enabled: false
+  isCA: false
+  organizations:
+    - default
+  commonName: postgresql.postgresql.svc.cluster.local
+  dnsNames:
+    - postgresql
+    - postgresql.postgresql.svc
+    - postgresql.postgresql.svc.cluster.local
+  issuerRef:
+    name: default
+    kind: ClusterIssuer
 
 ###
 # ```{rubric} Database Configuration
@@ -59,57 +72,16 @@ database:
       enabled: false
       key: ""
       cert: ""
+  username: "postgres"
+  password: "postgres"
   name: postgres
-fullnameOverride: "postgres"
+fullnameOverride: "postgresql"
 image:
   pullPolicy: IfNotPresent
   repository: postgres
   # Overrides the image tag whose default is the chart appVersion.
   tag: "16-alpine"
-  pullSecret: ""
-
-###
-# ```{rubric} Liveness Probe
-# ```
-# ---
-# Check that the service is live.
-#
-# ```{literalinclude} /values.yaml
-# :language: yaml
-# :start-at: "ingress:\n"
-# :end-before: "###\n"
-# ```
-#
-# ```{code-block} yaml
-# :caption: enable tls
-# kubernetes.io/tls-acme: "true"
-# tls:
-#  - secretName: chart-example-tls
-#    hosts:
-#      - chart-example.local
-# ```
-ingress:
-  annotations:
-    cert-manager.io/cluster-issuer: comms-svc-int
-    cert-manager.io/common-name: postgres
-    cert-manager.io/subject-organizationalunits: engineering
-    cert-manager.io/subject-countries: US
-    cert-manager.io/email-sans: postgres@breeze-blocks.net
-    cert-manager.io/subject-provinces: CA
-    cert-manager.io/subject-localities: Los Angeles
-  ingressClassName: nginx
-  enabled: true
-  hosts:
-    - host: postgres.breeze-blocks.net
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-          name: postgres
-          port: 5432
-  tls:
-    - secretName: postgres-tls
-      host:
-        - postgres.breeze-blocks.net
+imagePullSecrets: []
 
 ###
 # ```{rubric} Liveness Probe
@@ -148,10 +120,10 @@ livenessProbe:
 #
 # ```{literalinclude} /values.yaml
 # :language: yaml
-# :start-at: "nameOverride: postgres\n"
+# :start-at: "nameOverride: postgresql\n"
 # :end-before: "###\n"
 # ```
-nameOverride: postgres
+nameOverride: postgresql
 nodeSelector:
   kubernetes.io/os: linux
 
@@ -185,15 +157,16 @@ nodeSelector:
 # fsGroup: 2000
 # ```
 persistence:
-  name: postgres
+  name: postgresql
   claim:
     enabled: true
+  size: 10Gi
   storageClass: csi-lvm-linear
   accessModes:
     - ReadWriteOnce
 podAnnotations: {}
 podLabels:
-  app.kubernetes.io/name: postgres
+  app.kubernetes.io/name: postgresql
 podSecurityContext: {}
 
 ###
@@ -260,10 +233,11 @@ resources:
   limits:
     cpu: 1
     memory: 2048Mi
+    storage: 100Gi
   requests:
     cpu: 500m
     memory: 1024Mi
-    storage: 100Gi
+    storage: 50Gi
 
 ###
 # ```{rubric} Security and Service
@@ -305,7 +279,7 @@ service:
 serviceAccount:
   # Annotations to add to the service account
   annotations:
-    app.kubernetes.io/name: postgres
+    app.kubernetes.io/name: postgresql
   # Automatically mount a ServiceAccount's API credentials?
   automount: true
   # Specifies whether a service account should be created
@@ -313,7 +287,7 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the
   # fullname template
-  name: "postgres"
+  name: "postgresql"
 tolerations: []
 type: StatefulSet
 
