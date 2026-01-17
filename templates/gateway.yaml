@@ -2,13 +2,14 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: postgres-gateway
+  name: "{{ .Release.Name }}-gateway"
 spec:
   gatewayClassName: eg
   listeners:
-  - name: postgres
+  - name: {{ .Release.Name }}
     protocol: TCP
     port: 5432
     allowedRoutes:
       kinds:
       - kind: TCPRoute
+
