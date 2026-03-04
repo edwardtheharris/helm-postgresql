@@ -29,12 +29,12 @@ spec:
           env:
             - name: POSTGRES_DB
               value: "{{ .Values.database.name }}"
-            - name: PGUSER
+            - name: POSTGRES_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}
                   key: username
-            - name: PGPASSWORD
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}
@@ -53,13 +53,6 @@ spec:
             - name: {{ .Release.Name }}
               mountPath: /var/lib/postgresql/
               readOnly: false
-            - name: ssl
-              mountPath: /etc/pg/
-              readOnly: true
-      volumes:
-        - name: ssl
-          secret:
-            secretName: postgres-tls
       imagePullSecrets:
         - name: {{ .Values.image.pullSecret }}
       nodeSelector:
@@ -68,7 +61,7 @@ spec:
   volumeClaimTemplates:
     - metadata:
         name: {{ .Release.Name }}
-        annotations: 
+        annotations:
           external-provisioner.volume.kubernetes.io/finalizer: pv-protection
         labels:
           {{- include "postgresql.labels" . | nindent 10 }}

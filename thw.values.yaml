@@ -62,13 +62,14 @@ database:
   username: ""
   password: ""
   name: postgres
+  host: thw-pg.breeze-blocks.net
 fullnameOverride: "postgres"
 image:
-  pullPolicy: IfNotPresent
-  repository: postgres
+  pullPolicy: Always
+  repository: ghcr.io/edwardtheharris/helm-postgresql/postgres
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "16-alpine"
-  pullSecrets: ""
+  tag: "0.0.3-2"
+  pullSecret: ghcr
 
 ###
 # ```{rubric} Liveness Probe
@@ -147,9 +148,9 @@ persistence:
   name: postgres
   claim:
     enabled: true
-  storageClass: csi-lvm-linear
+  storageClass: csi-lvm-mirror
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
 podAnnotations: {}
 podLabels:
   app.kubernetes.io/name: postgres
@@ -222,7 +223,7 @@ resources:
   requests:
     cpu: 500m
     memory: 256Mi
-    storage: 100Gi
+    storage: 10Gi
 
 ###
 # ```{rubric} Security and Service
