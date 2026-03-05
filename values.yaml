@@ -39,19 +39,6 @@ autoscaling:
   minReplicas: 1
   # targetMemoryUtilizationPercentage: 80
   targetCPUUtilizationPercentage: 80
-certmanager:
-  enabled: false
-  isCA: false
-  organizations:
-    - default
-  commonName: postgresql.postgresql.svc.cluster.local
-  dnsNames:
-    - postgresql
-    - postgresql.postgresql.svc
-    - postgresql.postgresql.svc.cluster.local
-  issuerRef:
-    name: default
-    kind: ClusterIssuer
 
 ###
 # ```{rubric} Database Configuration
@@ -73,7 +60,7 @@ database:
       key: ""
       cert: ""
   username: "postgres"
-  password: "postgres"
+  password: ""
   name: postgres
 fullnameOverride: "postgresql"
 image:
@@ -157,7 +144,7 @@ nodeSelector:
 # fsGroup: 2000
 # ```
 persistence:
-  name: postgresql
+  name: postgres
   claim:
     enabled: true
   size: 10Gi
