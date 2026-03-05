@@ -12,8 +12,6 @@ spec:
       targetPort: {{ .Values.service.port }}
       protocol: TCP
       name: {{ .Values.nameOverride }}
-  externalIPs: {{ .Values.service.externalIPs }}
-  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
   selector:
     {{- include "postgresql.selectorLabels" . | nindent 4 }}
 {{- end -}}
