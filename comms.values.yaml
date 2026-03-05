@@ -59,6 +59,7 @@ database:
       enabled: false
       key: ""
       cert: ""
+      keystore: ""
   name: postgres
   host: postgres.breeze-blocks.net
 fullnameOverride: "postgres"
@@ -68,49 +69,6 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "0.0.3-2"
   pullSecret: ghcr
-
-###
-# ```{rubric} Liveness Probe
-# ```
-# ---
-# Check that the service is live.
-#
-# ```{literalinclude} /values.yaml
-# :language: yaml
-# :start-at: "ingress:\n"
-# :end-before: "###\n"
-# ```
-#
-# ```{code-block} yaml
-# :caption: enable tls
-# kubernetes.io/tls-acme: "true"
-# tls:
-#  - secretName: chart-example-tls
-#    hosts:
-#      - chart-example.local
-# ```
-ingress:
-  annotations:
-    cert-manager.io/cluster-issuer: comms-svc-int
-    cert-manager.io/common-name: postgres
-    cert-manager.io/subject-organizationalunits: engineering
-    cert-manager.io/subject-countries: US
-    cert-manager.io/email-sans: postgres@breeze-blocks.net
-    cert-manager.io/subject-provinces: CA
-    cert-manager.io/subject-localities: Los Angeles
-  ingressClassName: nginx
-  enabled: false
-  hosts:
-    - host: postgres.breeze-blocks.net
-      paths:
-        - path: /
-          pathType: Prefix
-          name: postgres
-          port: 5432
-  tls:
-    - secretName: postgres-tls
-      hosts:
-        - postgres.breeze-blocks.net
 
 ###
 # ```{rubric} Liveness Probe
@@ -189,9 +147,9 @@ persistence:
   name: postgres
   claim:
     enabled: true
-  storageClass: csi-lvm-linear
+  storageClass: csi-lvm-mirror
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
 podAnnotations: {}
 podLabels:
   app.kubernetes.io/name: postgres
