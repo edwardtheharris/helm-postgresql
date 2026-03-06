@@ -44,8 +44,8 @@ stage('test') {
         gitHubPRStatus(githubPRMessage('${GITHUB_PR_COND_REF} run started'))
         container('helm') {
           ansiColor('xterm') {
-            sh("helm create tarball for ${env.JOB_NAME}")
-            tar archive: true, compress: false, defaultExcludes: false, dir: 'test', exclude: '', file: "${env.JOB_NAME}.${env.BUILD_NUMBER}.tar", glob: '', overwrite: false
+            echo("helm create tarball for ${env.JOB_NAME}")
+            tar(archive: true, compress: false, defaultExcludes: false, dir: 'test', exclude: '', file: "${env.JOB_NAME}.${env.BUILD_NUMBER}.tar", glob: '', overwrite: false)
           }
         }
       }
