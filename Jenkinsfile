@@ -52,18 +52,19 @@ stage('test') {
       }
     }
   }
-/*stage("lint") {
+stage("lint") {
     podTemplate(agentContainer: 'helm', cloud: 'the-hard-way',
-                containers: [
-                containerTemplate(alwaysPullImage: true, command: '/usr/local/bin/jenkins-agent',
-                        image: 'ghcr.io/edwardtheharris/helm-jenkins/helm:0.0.2-00', livenessProbe: containerLivenessProbe(execArgs: '',
-                        failureThreshold: 0, initialDelaySeconds: 0, periodSeconds: 0,
-                        successThreshold: 0, timeoutSeconds: 0),
-                name: 'helm', resourceLimitCpu: '', resourceLimitEphemeralStorage: '', resourceLimitMemory: '',
-                resourceRequestCpu: '', resourceRequestEphemeralStorage: '',
-                resourceRequestMemory: '', ttyEnabled: true,
-                workingDir: '/home/jenkins/agent')], label: 'helm',
-                name: 'helm', namespace: 'jenkins') {
+              containers: [
+              containerTemplate(alwaysPullImage: true, command: '/usr/local/bin/jenkins-agent',
+                      image: 'ghcr.io/edwardtheharris/helm-jenkins/helm:0.0.2-00',
+                      livenessProbe: containerLivenessProbe(execArgs: '',
+                      failureThreshold: 0, initialDelaySeconds: 0, periodSeconds: 0,
+                      successThreshold: 0, timeoutSeconds: 0),
+              name: 'helm', resourceLimitCpu: '', resourceLimitEphemeralStorage: '', resourceLimitMemory: '',
+              resourceRequestCpu: '', resourceRequestEphemeralStorage: '',
+              resourceRequestMemory: '', ttyEnabled: true,
+              workingDir: '/home/jenkins/agent')], label: 'helm',
+              name: 'helm', namespace: 'jenkins') {
       node("${env.POD_LABEL}") {
         container("helm") {
           ansiColor('xterm') {
@@ -121,4 +122,4 @@ stage("helm unittests") {
     }
   }
 }
-*/
+
