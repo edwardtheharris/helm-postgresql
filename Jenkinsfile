@@ -46,7 +46,7 @@ stage('test') {
           ansiColor('xterm') {
             checkout scm
             echo("helm create tarball for ${env.JOB_BASE_NAME}")
-            tar(archive: true, compress: false, defaultExcludes: false, dir: 'helm-postgresql', exclude: '', file: "${env.JOB_BASE_NAME}.${env.BUILD_NUMBER}.tar", glob: '', overwrite: false)
+            tar(archive: true, compress: false, defaultExcludes: false, dir: '.', exclude: '', file: "${env.JOB_BASE_NAME}.${env.BUILD_NUMBER}.tar", glob: '', overwrite: false)
           }
         }
       }
