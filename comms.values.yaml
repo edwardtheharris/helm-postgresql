@@ -266,7 +266,7 @@ service:
 serviceAccount:
   # Annotations to add to the service account
   annotations:
-    app.kubernetes.io/name: postgres
+    app.kubernetes.io/name: cms-pg
   # Automatically mount a ServiceAccount's API credentials?
   automount: true
   # Specifies whether a service account should be created
@@ -274,7 +274,7 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the
   # fullname template
-  name: "postgres"
+  name: "cms-pg"
 tolerations: []
 type: StatefulSet
 
