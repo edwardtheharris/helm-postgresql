@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  annotations:
+    app.kubernetes.io/name: {{ .Release.Name }}
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  commonName: "{{ .Release.Name }}.breeze-blocks.net"
+  isCA: false
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: "{{ .Values.clusterIssuer }}"
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  secretName: "{{ .Release.Name }}-tls"

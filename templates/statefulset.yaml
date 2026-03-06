@@ -50,9 +50,9 @@ spec:
             - name: PGSSLROOTCERT
               value: /etc/pg/ssl/ca.crt
           volumeMounts:
-            - name: {{ .Release.Name }}
-              mountPath: /var/lib/postgresql/
-              readOnly: false
+            {{ .Values.volumeMounts | toYaml | nindent 12 }}
+      volumes:
+        {{ .Values.volumes | toYaml | nindent 8 }}
       imagePullSecrets:
         - name: {{ .Values.image.pullSecret }}
       nodeSelector:
@@ -60,7 +60,7 @@ spec:
       serviceAccountName: {{ .Release.Name }}
   volumeClaimTemplates:
     - metadata:
-        name: {{ .Release.Name }}
+        name: {{ .Values.persistence.name }}
         annotations:
           external-provisioner.volume.kubernetes.io/finalizer: pv-protection
         labels:
