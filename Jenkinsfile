@@ -87,23 +87,33 @@ stage("lint") {
       }
     }
     podTemplate(
-      agentContainer: 'mdlint', 
+      agentContainer: 'helm', 
       cloud: 'the-hard-way',
       containers: [
         containerTemplate(
           alwaysPullImage: true,
           image: 'davidanson/markdownlint-cli2:v0.21.0',
           name: 'mdlint'
-        )
+        ),
+        containerTemplate(
+                  alwaysPullImage: true, command: '/usr/local/bin/jenkins-agent',
+                  image: 'ghcr.io/edwardtheharris/helm-jenkins/helm:0.0.2-00',
+                  livenessProbe: containerLivenessProbe(execArgs: '',
+                  failureThreshold: 0, initialDelaySeconds: 0, periodSeconds: 0,
+                  successThreshold: 0, timeoutSeconds: 0),
+                  name: 'helm', resourceLimitCpu: '', resourceLimitEphemeralStorage: '', resourceLimitMemory: '',
+                  resourceRequestCpu: '', resourceRequestEphemeralStorage: '',
+                  resourceRequestMemory: '', ttyEnabled: true,
+                  workingDir: '/home/jenkins/agent'
+        ),
       ],
       label: 'mdlint',
       name: 'mdlint',
       namespace: 'jenkins'
     ) {
-      node("mdlint") {
-        ansiColor('xterm') {
-          container('mdlint') {
-            checkout scm
+      node("helm") {
+        container('mdlint') {
+          ansiColor('xterm') {
             sh("\"**/*.md\" \"*.md\"")
           }
         }
