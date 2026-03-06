@@ -40,7 +40,7 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
   targetCPUUtilizationPercentage: 80
 
-###
+  ###
 # ```{rubric} Database Configuration
 # ```
 # ---

@@ -1,8 +1,8 @@
 ###
-# ```{rubric} Default values for postgres deployment
+# ```{rubric} Default values for  deployment
 # ```
 # ---
-# Default values for postgres. This is a YAML-formatted file.
+# Default values for . This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 #
 # ```{code-block} yaml
@@ -59,57 +59,17 @@ database:
       enabled: false
       key: ""
       cert: ""
+  username: ""
+  password: ""
   name: postgres
-fullnameOverride: "postgres"
+  host: thw-pg.breeze-blocks.net
+fullnameOverride: ""
 image:
-  pullPolicy: IfNotPresent
-  repository: postgres
+  pullPolicy: Always
+  repository: ghcr.io/edwardtheharris/helm-postgresql/postgres
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "16-alpine"
-  pullSecrets: ""
-
-###
-# ```{rubric} Liveness Probe
-# ```
-# ---
-# Check that the service is live.
-#
-# ```{literalinclude} /values.yaml
-# :language: yaml
-# :start-at: "ingress:\n"
-# :end-before: "###\n"
-# ```
-#
-# ```{code-block} yaml
-# :caption: enable tls
-# kubernetes.io/tls-acme: "true"
-# tls:
-#  - secretName: chart-example-tls
-#    hosts:
-#      - chart-example.local
-# ```
-ingress:
-  annotations:
-    cert-manager.io/cluster-issuer: comms-svc-int
-    cert-manager.io/common-name: postgres
-    cert-manager.io/subject-organizationalunits: engineering
-    cert-manager.io/subject-countries: US
-    cert-manager.io/email-sans: postgres@breeze-blocks.net
-    cert-manager.io/subject-provinces: CA
-    cert-manager.io/subject-localities: Los Angeles
-  ingressClassName: nginx
-  enabled: true
-  hosts:
-    - host: postgres.breeze-blocks.net
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-          name: postgres
-          port: 5432
-  tls:
-    - secretName: postgres-tls
-      host:
-        - postgres.breeze-blocks.net
+  tag: "0.0.3-2"
+  pullSecret: ghcr
 
 ###
 # ```{rubric} Liveness Probe
@@ -148,10 +108,10 @@ livenessProbe:
 #
 # ```{literalinclude} /values.yaml
 # :language: yaml
-# :start-at: "nameOverride: postgres\n"
+# :start-at: "nameOverride: \n"
 # :end-before: "###\n"
 # ```
-nameOverride: postgres
+nameOverride: thw-pg
 nodeSelector:
   kubernetes.io/os: linux
 
@@ -185,15 +145,15 @@ nodeSelector:
 # fsGroup: 2000
 # ```
 persistence:
-  name: postgres
+  name: thw-pg
   claim:
     enabled: true
-  storageClass: csi-lvm-linear
+  storageClass: csi-lvm-mirror
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
 podAnnotations: {}
 podLabels:
-  app.kubernetes.io/name: postgres
+  app.kubernetes.io/name: thw-pg
 podSecurityContext: {}
 
 ###
@@ -263,7 +223,7 @@ resources:
   requests:
     cpu: 500m
     memory: 256Mi
-    storage: 100Gi
+    storage: 10Gi
 
 ###
 # ```{rubric} Security and Service
@@ -305,7 +265,7 @@ service:
 serviceAccount:
   # Annotations to add to the service account
   annotations:
-    app.kubernetes.io/name: postgres
+    app.kubernetes.io/name: thw-pg
   # Automatically mount a ServiceAccount's API credentials?
   automount: true
   # Specifies whether a service account should be created
@@ -313,7 +273,7 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the
   # fullname template
-  name: "postgres"
+  name: thw-pg
 tolerations: []
 type: StatefulSet
 
