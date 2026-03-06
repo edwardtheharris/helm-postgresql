@@ -60,7 +60,7 @@ database:
       key: ""
       cert: ""
   username: "postgres"
-  password: "postgres"
+  password: ""
   name: postgres
 fullnameOverride: "postgresql"
 image:
@@ -144,7 +144,7 @@ nodeSelector:
 # fsGroup: 2000
 # ```
 persistence:
-  name: postgresql
+  name: postgres
   claim:
     enabled: true
   size: 10Gi
