@@ -307,5 +307,14 @@ type: StatefulSet
 #     secretName: mysecret
 #     optional: false
 # ```
-volumeMounts: []
-volumes: []
+volumeMounts:
+  - name: thw-pg
+    mountPath: /var/lib/postgresql/
+    readOnly: false
+  - name: ssl
+    mountPath: /etc/pg/
+    readOnly: true
+volumes:
+  - name: ssl
+    secret:
+      secretName: thw-pg-tls
