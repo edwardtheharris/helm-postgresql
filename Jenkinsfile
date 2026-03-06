@@ -104,7 +104,7 @@ stage("lint") {
         ansiColor('xterm') {
           container('mdlint') {
             checkout scm
-            sh("markdownlint-cli2 \"**/*.md\" \"*.md\"")
+            sh("\"**/*.md\" \"*.md\"")
           }
         }
       }
