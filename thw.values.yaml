@@ -1,8 +1,8 @@
 ###
-# ```{rubric} Default values for postgres deployment
+# ```{rubric} Default values for  deployment
 # ```
 # ---
-# Default values for postgres. This is a YAML-formatted file.
+# Default values for . This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 #
 # ```{code-block} yaml
@@ -63,7 +63,7 @@ database:
   password: ""
   name: postgres
   host: thw-pg.breeze-blocks.net
-fullnameOverride: "postgres"
+fullnameOverride: ""
 image:
   pullPolicy: Always
   repository: ghcr.io/edwardtheharris/helm-postgresql/postgres
@@ -108,10 +108,10 @@ livenessProbe:
 #
 # ```{literalinclude} /values.yaml
 # :language: yaml
-# :start-at: "nameOverride: postgres\n"
+# :start-at: "nameOverride: \n"
 # :end-before: "###\n"
 # ```
-nameOverride: postgres
+nameOverride: thw-pg
 nodeSelector:
   kubernetes.io/os: linux
 
@@ -145,7 +145,7 @@ nodeSelector:
 # fsGroup: 2000
 # ```
 persistence:
-  name: postgres
+  name: thw-pg
   claim:
     enabled: true
   storageClass: csi-lvm-mirror
@@ -153,7 +153,7 @@ persistence:
     - ReadWriteMany
 podAnnotations: {}
 podLabels:
-  app.kubernetes.io/name: postgres
+  app.kubernetes.io/name: thw-pg
 podSecurityContext: {}
 
 ###
@@ -265,7 +265,7 @@ service:
 serviceAccount:
   # Annotations to add to the service account
   annotations:
-    app.kubernetes.io/name: postgres
+    app.kubernetes.io/name: thw-pg
   # Automatically mount a ServiceAccount's API credentials?
   automount: true
   # Specifies whether a service account should be created
@@ -273,7 +273,7 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the
   # fullname template
-  name: "postgres"
+  name: thw-pg
 tolerations: []
 type: StatefulSet
 
