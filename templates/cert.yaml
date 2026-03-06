@@ -4,7 +4,7 @@ metadata:
   annotations:
     app.kubernetes.io/name: {{ .Release.Name }}
   name: {{ .Release.Name }}
-  namespace: cert-manager
+  namespace: {{ .Release.Namespace }}
 spec:
   commonName: "{{ .Release.Name }}.breeze-blocks.net"
   isCA: false
