@@ -146,7 +146,7 @@ nodeSelector:
 # fsGroup: 2000
 # ```
 persistence:
-  name: postgres
+  name: cms-pg
   claim:
     enabled: true
   storageClass: csi-lvm-mirror
@@ -308,5 +308,14 @@ type: StatefulSet
 #     secretName: mysecret
 #     optional: false
 # ```
-volumeMounts: []
-volumes: []
+volumeMounts:
+  - name: cms-pg
+    mountPath: /var/lib/postgresql
+    readOnly: false
+  - name: ssl
+    mountPath: /etc/pg/
+    readOnly: true
+volumes:
+  - name: ssl
+    secret:
+      secretName: cms-pg-tls
