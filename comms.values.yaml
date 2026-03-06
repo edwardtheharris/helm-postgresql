@@ -224,7 +224,7 @@ resources:
   requests:
     cpu: 500m
     memory: 256Mi
-    storage: 100Gi
+    storage: 10Gi
 
 ###
 # ```{rubric} Security and Service
