@@ -146,7 +146,7 @@ nodeSelector:
 # fsGroup: 2000
 # ```
 persistence:
-  name: postgres
+  name: cms-pg
   claim:
     enabled: true
   storageClass: csi-lvm-mirror
@@ -224,7 +224,7 @@ resources:
   requests:
     cpu: 500m
     memory: 256Mi
-    storage: 100Gi
+    storage: 10Gi
 
 ###
 # ```{rubric} Security and Service
@@ -266,7 +266,7 @@ service:
 serviceAccount:
   # Annotations to add to the service account
   annotations:
-    app.kubernetes.io/name: postgres
+    app.kubernetes.io/name: cms-pg
   # Automatically mount a ServiceAccount's API credentials?
   automount: true
   # Specifies whether a service account should be created
@@ -274,7 +274,7 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the
   # fullname template
-  name: "postgres"
+  name: "cms-pg"
 tolerations: []
 type: StatefulSet
 
@@ -308,5 +308,14 @@ type: StatefulSet
 #     secretName: mysecret
 #     optional: false
 # ```
-volumeMounts: []
-volumes: []
+volumeMounts:
+  - name: cms-pg
+    mountPath: /var/lib/postgresql/
+    readOnly: false
+  - name: ssl
+    mountPath: /etc/pg/
+    readOnly: true
+volumes:
+  - name: ssl
+    secret:
+      secretName: cms-pg-tls
