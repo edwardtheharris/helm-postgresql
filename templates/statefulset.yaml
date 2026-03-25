@@ -27,9 +27,9 @@ spec:
             - containerPort: 5432
               name: postgres
           env:
-            - name: POSTGRES_DB
+            - name: PGDATABASE
               value: "{{ .Values.database.name }}"
-            - name: POSTGRES_USERNAME
+            - name: PGUSER
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}
@@ -50,9 +50,9 @@ spec:
             - name: PGSSLROOTCERT
               value: /etc/pg/ssl/ca.crt
           volumeMounts:
-            {{ .Values.volumeMounts | toYaml | nindent 12 }}
+            {{- .Values.volumeMounts | toYaml | nindent 12 }}
       volumes:
-        {{ .Values.volumes | toYaml | nindent 8 }}
+        {{- .Values.volumes | toYaml | nindent 8 }}
       imagePullSecrets:
         - name: {{ .Values.image.pullSecret }}
       nodeSelector:
@@ -60,11 +60,7 @@ spec:
       serviceAccountName: {{ .Release.Name }}
   volumeClaimTemplates:
     - metadata:
-        name: {{ .Values.persistence.name }}
-        annotations:
-          external-provisioner.volume.kubernetes.io/finalizer: pv-protection
-        labels:
-          {{- include "postgresql.labels" . | nindent 10 }}
+        name: {{ .Release.Name }}
       spec:
         accessModes:
           {{- .Values.persistence.accessModes | toYaml | nindent 10 }}

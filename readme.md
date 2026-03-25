@@ -81,3 +81,10 @@ helm -n postgresql uninstall postgresql
 ```{code-block} shel
 h upgrade --install postgres . -f secrets/$cluster.values.yaml -f $cluster.values.yaml
 ```
+
+## Notes
+
+In order to enable proper persistence, you must make sure to mount the
+`/var/lib/postgresql/data` directory as opposed to the `/var/lib/postgresql`
+directory as described
+in [the Postgres docker image docs](https://hub.docker.com/_/postgres#pgdata)
