@@ -311,8 +311,9 @@ type: StatefulSet
 # ```
 volumeMounts:
   - name: thw-pg
-    mountPath: /var/lib/postgresql/
+    mountPath: /var/lib/postgresql/data
     readOnly: false
+    subPath: postgresql
   - name: ssl
     mountPath: /etc/pg/
     readOnly: true
