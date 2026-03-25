@@ -67,9 +67,11 @@ database:
 fullnameOverride: "postgres"
 image:
   pullPolicy: Always
-  repository: ghcr.io/edwardtheharris/helm-postgresql/postgres
+  # repository: ghcr.io/edwardtheharris/helm-postgresql/postgres
+  repository: postgres
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.0.3-2"
+  # tag: "0.0.3-2"
+  tag: 16-alpine
   pullSecret: ghcr
 
 ###
@@ -146,10 +148,10 @@ nodeSelector:
 # fsGroup: 2000
 # ```
 persistence:
-  name: cms-pg
+  name: postgres
   claim:
     enabled: true
-  storageClass: csi-lvm-mirror
+  storageClass: nfs-retain
   accessModes:
     - ReadWriteMany
 podAnnotations: {}
@@ -266,7 +268,7 @@ service:
 serviceAccount:
   # Annotations to add to the service account
   annotations:
-    app.kubernetes.io/name: cms-pg
+    app.kubernetes.io/name: postgres
   # Automatically mount a ServiceAccount's API credentials?
   automount: true
   # Specifies whether a service account should be created
@@ -274,7 +276,7 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the
   # fullname template
-  name: "cms-pg"
+  name: postgres
 tolerations: []
 type: StatefulSet
 
@@ -309,13 +311,14 @@ type: StatefulSet
 #     optional: false
 # ```
 volumeMounts:
-  - name: cms-pg
-    mountPath: /var/lib/postgresql/
+  - name: postgres
+    mountPath: /var/lib/postgresql/data
     readOnly: false
+    subPath: postgresql
   - name: ssl
     mountPath: /etc/pg/
     readOnly: true
 volumes:
   - name: ssl
     secret:
-      secretName: cms-pg-tls
+      secretName: postgres-tls
