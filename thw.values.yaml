@@ -68,9 +68,11 @@ database:
 fullnameOverride: ""
 image:
   pullPolicy: Always
-  repository: ghcr.io/edwardtheharris/helm-postgresql/postgres
+  # repository: ghcr.io/edwardtheharris/helm-postgresql/postgres
+  repository: postgres
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.0.3-2"
+  # tag: "0.0.3-2"
+  tag: 16-alpine
   pullSecret: ghcr
 
 ###
@@ -150,7 +152,7 @@ persistence:
   name: thw-pg
   claim:
     enabled: true
-  storageClass: csi-lvm-mirror
+  storageClass: nfs-retain
   accessModes:
     - ReadWriteMany
 podAnnotations: {}
