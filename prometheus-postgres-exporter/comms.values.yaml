@@ -166,7 +166,7 @@ config:
     # User key inside secret
     #  key:
     # Only one of password, passwordFile, passwordSecret and pgpassfile can be specified
-    password:
+    password: ""
     # Specify passwordFile if DB password is stored in a file.
     # For example, to use with vault-injector from Hashicorp
     passwordFile: ""
