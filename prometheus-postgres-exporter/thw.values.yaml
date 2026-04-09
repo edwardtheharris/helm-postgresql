@@ -155,8 +155,8 @@ config:
   ## ref: https://helm.sh/docs/developing_charts/#using-the-tpl-function
   datasource:
     # Specify one of both datasource or datasourceSecret
-    host: thw-pg.breeze-blocks.net
-    user: postgres
+    host: ""
+    user: ""
     # Specify userFile if DB username is stored in a file.
     # For example, to use with vault-injector from Hashicorp
     userFile: ""
