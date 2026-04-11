@@ -25,7 +25,6 @@ tests/index
 ```{toctree}
 :caption: meta
 
-.github/index
 changelog
 license
 readme
