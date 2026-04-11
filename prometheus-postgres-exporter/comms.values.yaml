@@ -17,8 +17,8 @@ image:
 command: []
 
 service:
-  type: ClusterIP
-  port: 80
+  type: LoadBalancer
+  port: 9187
   targetPort: 9187
   name: http
   labels: {}
@@ -52,7 +52,7 @@ serviceMonitor:
   # TLS configuration to use when scraping the metric endpoint by Prometheus.
   # tlsConfig: {}
 
-   # Use multipleTarget mode
+  # Use multipleTarget mode
   multipleTarget:
     enabled: false
     # Use the same auth module for every target
@@ -88,17 +88,17 @@ prometheusRule:
 
 priorityClassName: ""
 
-resources: {}
+resources: # {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #    memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
 
 rbac:
   # Specifies whether RBAC resources should be created
@@ -155,34 +155,34 @@ config:
   ## ref: https://helm.sh/docs/developing_charts/#using-the-tpl-function
   datasource:
     # Specify one of both datasource or datasourceSecret
-    host: ''
-    user: postgres
+    host: ""
+    user: ""
     # Specify userFile if DB username is stored in a file.
     # For example, to use with vault-injector from Hashicorp
-    userFile: ''
+    userFile: ""
     userSecret: {}
     # Secret name
     #  name:
     # User key inside secret
     #  key:
     # Only one of password, passwordFile, passwordSecret and pgpassfile can be specified
-    password:
+    password: ""
     # Specify passwordFile if DB password is stored in a file.
     # For example, to use with vault-injector from Hashicorp
-    passwordFile: ''
+    passwordFile: ""
     # Specify passwordSecret if DB password is stored in secret.
     passwordSecret: {}
     # Secret name
     #  name:
     # Password key inside secret
     #  key:
-    pgpassfile: ''
+    pgpassfile: ""
     # If pgpassfile is set, it is used to initialize the PGPASSFILE environment variable.
     # See https://www.postgresql.org/docs/14/libpq-pgpass.html for more info.
     port: "5432"
-    database: ''
+    database: postgres
     sslmode: disable
-    extraParams: ''
+    extraParams: ""
   datasourceSecret: {}
     # Specifies if datasource should be sourced from secret value in format: postgresql://login:password@hostname:port/dbname?sslmode=disable
     # Multiple Postgres databases can be configured by comma separated postgres connection strings
@@ -202,7 +202,8 @@ config:
   extraArgs: []
 
   # postgres_exporter.yml
-  postgresExporter: ""
+  postgresExporter:
+    ""
     # auth_modules:
     #   first:
     #     type: userpass
