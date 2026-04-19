@@ -27,14 +27,14 @@ spec:
             - containerPort: 5432
               name: postgres
           env:
-            - name: POSTGRES_DB
+            - name: PGDATABASE
               value: "{{ .Values.database.name }}"
             - name: PGUSER
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}
                   key: username
-            - name: PGPASSWORD
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}
@@ -50,16 +50,9 @@ spec:
             - name: PGSSLROOTCERT
               value: /etc/pg/ssl/ca.crt
           volumeMounts:
-            - name: {{ .Release.Name }}
-              mountPath: /var/lib/postgresql/
-              readOnly: false
-            - name: ssl
-              mountPath: /etc/pg/
-              readOnly: true
+            {{- .Values.volumeMounts | toYaml | nindent 12 }}
       volumes:
-        - name: ssl
-          secret:
-            secretName: postgres-tls
+        {{- .Values.volumes | toYaml | nindent 8 }}
       imagePullSecrets:
         - name: {{ .Values.image.pullSecret }}
       nodeSelector:
@@ -68,10 +61,6 @@ spec:
   volumeClaimTemplates:
     - metadata:
         name: {{ .Release.Name }}
-        annotations:
-          external-provisioner.volume.kubernetes.io/finalizer: pv-protection
-        labels:
-          {{- include "postgresql.labels" . | nindent 10 }}
       spec:
         accessModes:
           {{- .Values.persistence.accessModes | toYaml | nindent 10 }}

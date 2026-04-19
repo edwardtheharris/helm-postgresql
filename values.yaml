@@ -40,6 +40,8 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
   targetCPUUtilizationPercentage: 80
 
+clusterIssuer: pg-svc-int
+
 ###
 # ```{rubric} Database Configuration
 # ```
