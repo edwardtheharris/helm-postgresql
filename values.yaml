@@ -1,8 +1,8 @@
 ###
-# ```{rubric} Default values for PostgreSQL deployment
+# ```{rubric} Default values for postgres deployment
 # ```
 # ---
-# Default values for postgresql. This is a YAML-formatted file.
+# Default values for postgres. This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 #
 # ```{code-block} yaml
@@ -64,7 +64,7 @@ database:
   username: "postgres"
   password: ""
   name: postgres
-fullnameOverride: "postgresql"
+fullnameOverride: "postgres"
 image:
   pullPolicy: IfNotPresent
   repository: postgres
@@ -109,10 +109,10 @@ livenessProbe:
 #
 # ```{literalinclude} /values.yaml
 # :language: yaml
-# :start-at: "nameOverride: postgresql\n"
+# :start-at: "nameOverride: postgres\n"
 # :end-before: "###\n"
 # ```
-nameOverride: postgresql
+nameOverride: postgres
 nodeSelector:
   kubernetes.io/os: linux
 
@@ -150,12 +150,15 @@ persistence:
   claim:
     enabled: true
   size: 10Gi
-  storageClass: csi-lvm-linear
+  storageClass: nfs-retain-cms03
   accessModes:
-    - ReadWriteOnce
-podAnnotations: {}
+    - ReadWriteMany
+podAnnotations:
+  vault.hashicorp.com/agent-inject: "true"
+  vault.hashicorp.com/role: "postgres"
+  vault.hashicorp.com/agent-inject-secret-database-postgres: "internal/data/database/postgres"
 podLabels:
-  app.kubernetes.io/name: postgresql
+  app.kubernetes.io/name: postgres
 podSecurityContext: {}
 
 ###
@@ -268,7 +271,7 @@ service:
 serviceAccount:
   # Annotations to add to the service account
   annotations:
-    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/name: postgres
   # Automatically mount a ServiceAccount's API credentials?
   automount: true
   # Specifies whether a service account should be created
@@ -276,7 +279,7 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the
   # fullname template
-  name: "postgresql"
+  name: "postgres"
 tolerations: []
 type: StatefulSet
 
