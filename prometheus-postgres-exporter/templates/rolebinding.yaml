@@ -12,5 +12,5 @@ roleRef:
   name: {{ template "prometheus-postgres-exporter.fullname" . }}
 subjects:
 - kind: ServiceAccount
-  name: {{ template "prometheus-postgres-exporter.serviceAccountName" . }}
+  name: "{{ .Release.Name }}"
 {{- end -}}

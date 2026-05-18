@@ -16,6 +16,9 @@ image:
 
 command: []
 
+httproute:
+  hostname: cms-pge.breeze-blocks.net
+
 service:
   type: ClusterIP
   port: 80

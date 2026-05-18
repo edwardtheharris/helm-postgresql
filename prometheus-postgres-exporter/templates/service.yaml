@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "prometheus-postgres-exporter.fullname" . }}
-  namespace: {{ include "prometheus-postgres-exporter.namespace" . }}
-  {{- if .Values.service.annotations }}
+  name: "{{ .Release.Name }}"
+  namespace: "{{ .Release.Namespace }}"
+{{- if .Values.service.annotations }}
   annotations:
 {{ toYaml .Values.service.annotations | indent 4 }}
 {{- end }}
   labels:
-    {{- include "prometheus-postgres-exporter.labels" . | nindent 4 }}
+    app.kubernetes.io/name: "{{ .Release.Name }}" 
 {{- if .Values.service.labels }}
 {{ toYaml .Values.service.labels | trim | indent 4 }}
 {{- end }}
@@ -18,6 +18,6 @@ spec:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.targetPort }}
       protocol: TCP
-      name: {{ .Values.service.name }}
+      name: {{ .Values.service.name }} 
   selector:
-    {{- include "prometheus-postgres-exporter.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/name: "{{ .Release.Name }}"
