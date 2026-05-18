@@ -3,7 +3,7 @@
 Expand the name of the chart.
 */}}
 {{- define "prometheus-postgres-exporter.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{ .Release.Name }}
 {{- end -}}
 
 {{/*
@@ -50,18 +50,13 @@ Selector labels
 */}}
 {{- define "prometheus-postgres-exporter.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "prometheus-postgres-exporter.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
 {{- define "prometheus-postgres-exporter.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create -}}
-    {{ default (include "prometheus-postgres-exporter.fullname" .) .Values.serviceAccount.name }}
-{{- else -}}
-    {{ default "default" .Values.serviceAccount.name }}
-{{- end -}}
+{{ .Release.Name }}
 {{- end -}}
 
 {{/*

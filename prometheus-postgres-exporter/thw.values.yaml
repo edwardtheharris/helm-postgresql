@@ -109,7 +109,7 @@ serviceAccount:
   create: true
   # The name of the ServiceAccount to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: prometheus-postgres-exporter
+  name: postgres
   # Add annotations to the ServiceAccount, useful for EKS IAM Roles for Service Accounts or Google Workload Identity.
   annotations: {}
 
@@ -226,6 +226,18 @@ tolerations: []
 affinity: {}
 
 annotations: {}
+  #  vault.hashicorp.com/agent-inject: "true"
+  #  vault.hashicorp.com/role: "postgres-exporter"
+  #  vault.hashicorp.com/agent-inject-secret-password: "the-hard-way/data/database/thw-pg"
+  #  vault.hashicorp.com/agent-inject-template-password: |
+  #    {{- with secret "the-hard-way/data/database/thw-pg" -}}
+  #    {{ .Data.data.password }}
+  #    {{- end -}}
+  #  vault.hashicorp.com/agent-inject-secret-username: "the-hard-way/data/database/thw-pg"
+  #  vault.hashicorp.com/agent-inject-template-username: |
+  #    {{- with secret "the-hard-way/data/database/thw-pg" -}}
+  #    {{ .Data.data.username }}
+  #    {{- end -}}
 
 podLabels: {}
 

@@ -1,0 +1,13 @@
+---
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: TCPRoute
+metadata:
+  name: "{{ .Release.Name }}"
+spec:
+  parentRefs:
+  - name: postgres
+    sectionName: postgres
+  rules:
+  - backendRefs:
+    - name: "{{ .Release.Name }}"
+      port: 5432

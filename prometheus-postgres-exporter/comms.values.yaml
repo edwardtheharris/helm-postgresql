@@ -17,14 +17,15 @@ image:
 command: []
 
 service:
-  type: LoadBalancer
+  type: ClusterIP
   port: 9187
   targetPort: 9187
+  hostname: cms-pg.breeze-blocks.net
   name: http
   labels: {}
   annotations: {}
 
-automountServiceAccountToken: false
+automountServiceAccountToken: true
 
 serviceMonitor:
   # When set true then use a ServiceMonitor to configure scraping
@@ -94,8 +95,8 @@ resources: # {}
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   limits:
-    cpu: 500m
-    memory: 512Mi
+    cpu: 1
+    memory: 1Gi
   requests:
     cpu: 100m
     memory: 128Mi
@@ -109,7 +110,7 @@ serviceAccount:
   create: true
   # The name of the ServiceAccount to use.
   # If not set and create is true, a name is generated using the fullname template
-  name:
+  name: "postgres"
   # Add annotations to the ServiceAccount, useful for EKS IAM Roles for Service Accounts or Google Workload Identity.
   annotations: {}
 
@@ -155,11 +156,11 @@ config:
   ## ref: https://helm.sh/docs/developing_charts/#using-the-tpl-function
   datasource:
     # Specify one of both datasource or datasourceSecret
-    host: ""
+    host: postgres.database.svc.cluster.local
     user: ""
     # Specify userFile if DB username is stored in a file.
     # For example, to use with vault-injector from Hashicorp
-    userFile: ""
+    userFile: "/vault/secrets/username"
     userSecret: {}
     # Secret name
     #  name:
@@ -169,7 +170,7 @@ config:
     password: ""
     # Specify passwordFile if DB password is stored in a file.
     # For example, to use with vault-injector from Hashicorp
-    passwordFile: ""
+    passwordFile: "/vault/secrets/password"
     # Specify passwordSecret if DB password is stored in secret.
     passwordSecret: {}
     # Secret name
@@ -219,13 +220,26 @@ config:
     enabled: false
     name: ""
 
-nodeSelector: {}
+nodeSelector:
+  kubernetes.io/os: linux
 
 tolerations: []
 
 affinity: {}
 
-annotations: {}
+annotations:
+  vault.hashicorp.com/agent-inject: "true"
+  vault.hashicorp.com/role: "postgres-exporter"
+  vault.hashicorp.com/agent-inject-secret-password: "internal/data/database/postgres-exporter"
+  vault.hashicorp.com/agent-inject-template-password: |
+    {{- with secret "internal/data/database/postgres-exporter" -}}
+    {{ .Data.data.password }}
+    {{- end -}}
+  vault.hashicorp.com/agent-inject-secret-username: "internal/data/database/postgres-exporter"
+  vault.hashicorp.com/agent-inject-template-username: |
+    {{- with secret "internal/data/database/postgres-exporter" -}}
+    {{ .Data.data.username }}
+    {{- end -}}
 
 podLabels: {}
 

@@ -64,7 +64,9 @@ spec:
       serviceAccountName: {{ .Release.Name }}
   volumeClaimTemplates:
     - metadata:
-        name: {{ .Release.Name }}
+        name: {{ .Release.Name }}-lvm
+        labels:
+          {{- include "postgresql.labels" . | nindent 10 }}
       spec:
         accessModes:
           {{- .Values.persistence.accessModes | toYaml | nindent 10 }}

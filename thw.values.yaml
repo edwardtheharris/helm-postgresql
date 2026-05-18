@@ -152,7 +152,7 @@ persistence:
   name: thw-pg
   claim:
     enabled: true
-  storageClass: nfs-thw01
+  storageClass: nfs-thw02
   accessModes:
     - ReadWriteMany
 podAnnotations: {}

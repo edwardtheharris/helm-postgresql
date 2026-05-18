@@ -151,10 +151,12 @@ persistence:
   name: postgres
   claim:
     enabled: true
-  storageClass: nfs-retain
-  accessModes:
-    - ReadWriteMany
-podAnnotations: {}
+  storageClass: csi-lvm-linear
+podAnnotations:
+  vault.hashicorp.com/agent-inject: "true"
+  vault.hashicorp.com/role: "postgres"
+  vault.hashicorp.com/agent-inject-secret-database-postgres: "internal/data/database/postgres"
+  vault.hashicorp.com/tls-skip-verify: "true"
 podLabels:
   app.kubernetes.io/name: postgres
 podSecurityContext: {}
@@ -248,7 +250,8 @@ resources:
 # runAsNonRoot: true
 # runAsUser: 1000
 # ```
-securityContext: {}
+securityContext:
+  runAsUser: 0
 service:
   enabled: true
   port: 5432
@@ -311,7 +314,7 @@ type: StatefulSet
 #     optional: false
 # ```
 volumeMounts:
-  - name: postgres
+  - name: postgres-lvm
     mountPath: /var/lib/postgresql/data
     readOnly: false
     subPath: postgresql
