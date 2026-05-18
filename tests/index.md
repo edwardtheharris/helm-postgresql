@@ -26,18 +26,3 @@ To run these tests you need to install the unittest plugin.
    ```{code-block} shell
    helm unittest -f 'tests/*.yaml' .
    ```
-
-### Service Test
-
-```{autoyaml} tests/service_test.yaml
-```
-
-### ServiceAccount Test
-
-```{autoyaml} tests/serviceaccount_test.yaml
-```
-
-### StatefulSet Test
-
-```{autoyaml} tests/statefulset_test.yaml
-```

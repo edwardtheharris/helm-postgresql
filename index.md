@@ -40,15 +40,3 @@ security
 ```{include} readme.md
 ```
 
-### Chart
-
-```{autoyaml} Chart.yaml
-```
-
-#### Values
-
-```{autoyaml} values.yaml
-```
-
-```{sectionauthor} Xander Harris <xandertheharris@gmail.com>
-```
