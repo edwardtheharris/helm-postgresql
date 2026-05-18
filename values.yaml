@@ -54,6 +54,9 @@ clusterIssuer: pg-svc-int
 # :start-at: "database:\n"
 # :end-before: "###\n"
 # ```
+config:
+  database:
+    password: ""
 database:
   config:
     enabled: false
