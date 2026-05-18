@@ -56,7 +56,8 @@ clusterIssuer: pg-svc-int
 # ```
 config:
   database:
-    password: ""
+    password: "postgres"
+    username: "postgres"
 database:
   config:
     enabled: false
