@@ -8,9 +8,9 @@ metadata:
 spec:
   gatewayClassName: eg
   listeners:
-    - name: http
+    - name: {{ .Release.Name }}
       hostname: {{ .Values.service.hostname }}
-      port: 80
+      port: 9187
       protocol: HTTP
       allowedRoutes:
         namespaces:
