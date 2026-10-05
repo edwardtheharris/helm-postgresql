@@ -47,12 +47,12 @@
         },
         "gitpython": {
             "hashes": [
-                "sha256:22c9c94bb6b0b9f3c7157c684fece45a414cea204586b600beae6cd4570dcd6d",
-                "sha256:d5b29685708f3c80a56db040b665bfd69492c8e150b5848532af8013b686c5a4"
+                "sha256:bd70c5ec05cd2b797423e7eb312147d2458d3cca92085888fba2213f85905537",
+                "sha256:fb92310af6844d96adc95ca066ed2e617c00e1dbd146a326626c81e72e18cc2e"
             ],
             "index": "pypi",
-            "markers": "python_version >= '3.7'",
-            "version": "==3.1.51"
+            "markers": "python_version >= '3.8'",
+            "version": "==3.2.0"
         },
         "loguru": {
             "hashes": [
