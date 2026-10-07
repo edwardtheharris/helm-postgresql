@@ -1,6 +1,5 @@
 _build
 *.gpg
-*.values.yaml
 __snapshot__/
 .gnupg/
 .vscode/
