@@ -40,7 +40,7 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
   targetCPUUtilizationPercentage: 80
 
-clusterIssuer: thw-svc-int-ca
+clusterIssuer: thw-svc-int
 
 ###
 # ```{rubric} Database Configuration
@@ -64,7 +64,7 @@ database:
   username: ""
   password: ""
   name: postgres
-  host: thw-pg.breeze-blocks.net
+  host: postgres.the-hard-way.gov
 fullnameOverride: ""
 image:
   pullPolicy: Always
@@ -72,8 +72,7 @@ image:
   repository: postgres
   # Overrides the image tag whose default is the chart appVersion.
   # tag: "0.0.3-2"
-  tag: 16-alpine
-  pullSecret: ghcr
+  tag: 18-alpine
 
 ###
 # ```{rubric} Liveness Probe
@@ -115,7 +114,7 @@ livenessProbe:
 # :start-at: "nameOverride: \n"
 # :end-before: "###\n"
 # ```
-nameOverride: thw-pg
+nameOverride: postgres
 nodeSelector:
   kubernetes.io/os: linux
 
@@ -149,15 +148,18 @@ nodeSelector:
 # fsGroup: 2000
 # ```
 persistence:
-  name: thw-pg
+  name: postgres
   claim:
     enabled: true
-  storageClass: nfs-thw02
+  storageClass: nfs-retain
   accessModes:
     - ReadWriteMany
-podAnnotations: {}
+podAnnotations:
+  vault.hashicorp.com/agent-inject: 'true'
+  vault.hashicorp.com/role: 'postgres'
+  vault.hashicorp.com/agent-inject-secret-postgres-thw-config.txt: 'internal/data/postgres/thw'
 podLabels:
-  app.kubernetes.io/name: thw-pg
+  app.kubernetes.io/name: postgres
 podSecurityContext: {}
 
 ###
@@ -182,7 +184,7 @@ readinessProbe:
       - -U
       - postgres
   # When to give up, marking the Pod as Unready
-  failureThreshold: 3
+  failurethreshold: 3
   # Delay before the first probe is initiated, can be shorter than
   # liveness probe
   initialDelaySeconds: 5
@@ -227,7 +229,6 @@ resources:
   requests:
     cpu: 500m
     memory: 256Mi
-    storage: 10Gi
 
 ###
 # ```{rubric} Security and Service
@@ -269,7 +270,7 @@ service:
 serviceAccount:
   # Annotations to add to the service account
   annotations:
-    app.kubernetes.io/name: thw-pg
+    app.kubernetes.io/name: postgres
   # Automatically mount a ServiceAccount's API credentials?
   automount: true
   # Specifies whether a service account should be created
@@ -277,7 +278,7 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the
   # fullname template
-  name: thw-pg
+  name: postgres
 tolerations: []
 type: StatefulSet
 
@@ -312,7 +313,7 @@ type: StatefulSet
 #     optional: false
 # ```
 volumeMounts:
-  - name: thw-pg
+  - name: postgres
     mountPath: /var/lib/postgresql/data
     readOnly: false
     subPath: postgresql
@@ -322,4 +323,4 @@ volumeMounts:
 volumes:
   - name: ssl
     secret:
-      secretName: thw-pg-tls
+      secretName: postgres-tls
