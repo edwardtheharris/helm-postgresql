@@ -35,7 +35,7 @@ spec:
         {{- end }}
     spec:
       automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
-      serviceAccountName: {{ template "prometheus-postgres-exporter.serviceAccountName" . }}
+      serviceAccountName: {{ .Values.serviceAccount.name }} 
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
