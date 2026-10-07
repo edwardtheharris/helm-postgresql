@@ -152,10 +152,13 @@ persistence:
   name: thw-pg
   claim:
     enabled: true
-  storageClass: nfs-thw02
+  storageClass: nfs-retain
   accessModes:
     - ReadWriteMany
-podAnnotations: {}
+podAnnotations:
+  vault.hashicorp.com/agent-inject: 'true'
+  vault.hashicorp.com/role: 'thw-pg'
+  vault.hashicorp.com/agent-inject-secret-postgres-thw-config.txt: 'internal/data/postgres/thw'
 podLabels:
   app.kubernetes.io/name: thw-pg
 podSecurityContext: {}
@@ -182,7 +185,7 @@ readinessProbe:
       - -U
       - postgres
   # When to give up, marking the Pod as Unready
-  failureThreshold: 3
+  failurethreshold: 3
   # Delay before the first probe is initiated, can be shorter than
   # liveness probe
   initialDelaySeconds: 5
@@ -227,7 +230,6 @@ resources:
   requests:
     cpu: 500m
     memory: 256Mi
-    storage: 10Gi
 
 ###
 # ```{rubric} Security and Service

@@ -23,6 +23,13 @@ spec:
       labels:
         {{- include "postgresql.labels" . | nindent 8 }}
     spec:
+      resources:
+        limits:
+          cpu: 1
+          memory: 1Gi
+        requests:
+          cpu: 300m
+          memory: 128Mi
       containers:
         - name: postgres
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -60,11 +67,11 @@ spec:
       imagePullSecrets:
         - name: {{ .Values.image.pullSecret }}
       nodeSelector:
-        {{ .Values.nodeSelector | toYaml }}
+        {{ .Values.nodeSelector | toYaml | nindent 8}}
       serviceAccountName: {{ .Release.Name }}
   volumeClaimTemplates:
     - metadata:
-        name: {{ .Release.Name }}-lvm
+        name: {{ .Release.Name }}
         labels:
           {{- include "postgresql.labels" . | nindent 10 }}
       spec:

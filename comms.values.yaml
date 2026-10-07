@@ -71,8 +71,9 @@ image:
   repository: postgres
   # Overrides the image tag whose default is the chart appVersion.
   # tag: "0.0.3-2"
-  tag: 16-alpine
+  tag: 18-alpine
   pullSecret: ghcr
+  token: ""
 
 ###
 # ```{rubric} Liveness Probe
@@ -151,7 +152,7 @@ persistence:
   name: postgres
   claim:
     enabled: true
-  storageClass: csi-lvm-linear
+  storageClass: nfs
 podAnnotations:
   vault.hashicorp.com/agent-inject: "true"
   vault.hashicorp.com/role: "postgres"
@@ -159,7 +160,9 @@ podAnnotations:
   vault.hashicorp.com/tls-skip-verify: "true"
 podLabels:
   app.kubernetes.io/name: postgres
-podSecurityContext: {}
+podSecurityContext:
+  securityContext:
+    allowPrivilegeEscalation: false
 
 ###
 # ```{rubric} Readiness Probe
@@ -228,7 +231,6 @@ resources:
   requests:
     cpu: 500m
     memory: 256Mi
-    storage: 10Gi
 
 ###
 # ```{rubric} Security and Service
@@ -314,8 +316,8 @@ type: StatefulSet
 #     optional: false
 # ```
 volumeMounts:
-  - name: postgres-lvm
-    mountPath: /var/lib/postgresql/data
+  - name: postgres
+    mountPath: /var/lib/postgresql
     readOnly: false
     subPath: postgresql
   - name: ssl
