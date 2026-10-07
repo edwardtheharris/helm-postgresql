@@ -257,7 +257,7 @@ securityContext:
 service:
   enabled: true
   port: 5432
-  type: LoadBalancer
+  type: ClusterIP
 
 ###
 # ```{rubric} Security and Service

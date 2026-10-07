@@ -29,19 +29,20 @@ automountServiceAccountToken: true
 
 serviceMonitor:
   # When set true then use a ServiceMonitor to configure scraping
-  enabled: false
+  enabled: true
   # Specify the API version for the ServiceMonitor
   apiVersion: "monitoring.coreos.com/v1"
   # Set the namespace the ServiceMonitor should be deployed
-  # namespace: monitoring
+  namespace: monitoring
   # Set how frequently Prometheus should scrape
-  # interval: 30s
+  interval: 30s
   # Set path to cloudwatch-exporter telemtery-path
   # telemetryPath: /metrics
   # Set labels for the ServiceMonitor, use this to define your scrape label for Prometheus Operator
-  # labels:
+  labels:
+    app: postgres-exporter
   # Set timeout for scrape
-  # timeout: 10s
+  timeout: 10s
   # Set of labels to transfer from the Kubernetes Service onto the target
   # targetLabels: []
   # MetricRelabelConfigs to apply to samples before ingestion
@@ -229,15 +230,15 @@ affinity: {}
 
 annotations:
   vault.hashicorp.com/agent-inject: "true"
-  vault.hashicorp.com/role: "postgres-exporter"
-  vault.hashicorp.com/agent-inject-secret-password: "internal/data/database/postgres-exporter"
+  vault.hashicorp.com/role: "postgres"
+  vault.hashicorp.com/agent-inject-secret-password: "internal/data/database/postgres"
   vault.hashicorp.com/agent-inject-template-password: |
-    {{- with secret "internal/data/database/postgres-exporter" -}}
+    {{- with secret "internal/data/database/postgres" -}}
     {{ .Data.data.password }}
     {{- end -}}
-  vault.hashicorp.com/agent-inject-secret-username: "internal/data/database/postgres-exporter"
+  vault.hashicorp.com/agent-inject-secret-username: "internal/data/database/postgres"
   vault.hashicorp.com/agent-inject-template-username: |
-    {{- with secret "internal/data/database/postgres-exporter" -}}
+    {{- with secret "internal/data/database/postgres" -}}
     {{ .Data.data.username }}
     {{- end -}}
 
